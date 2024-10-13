@@ -1,0 +1,5 @@
+example_id                            | status | run_time     |
+------------------------------------- | ------ | ------------ |
+./spec/cli/base_spec.rb[1:1]          | passed | 1.1 seconds  |
+./spec/cli/base_spec.rb[1:2]          | passed | 1.12 seconds |
+./spec/cli/start_command_spec.rb[1:1] | passed | 1.08 seconds |

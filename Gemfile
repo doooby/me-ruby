@@ -63,3 +63,11 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+###############################################
+
+gem 'colorize'
+
+group :test do
+  gem 'rspec-rails'
+end
