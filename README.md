@@ -20,19 +20,3 @@ me edit <ID> # print it and prompt to verify
 me edit <task> # print (list) if ambiguous and let user select.
   --> in next step: ([attribute="value with space"], ...)
 ```
-
-## tasks
-me0 [-] (zig) init
-me1 [-] (zig) use zig-clap to parse args
-me2 [-] (zig) sqlite integration
-me3 [x] move to ruby
-me4 [ ] opt parsing, task cli command
-
-## dev log
-date | task | hours | text
-240921 me0 20 learning basics, linking sqlite3
-240922 me0 1 vision
-date | start | end | task | text
-241002 18:45 19:15 me1 revert to zig 0.13
-241003 14:00 14:45 i give up
-241013 12:00 me3, me4
