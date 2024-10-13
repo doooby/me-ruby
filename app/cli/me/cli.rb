@@ -4,29 +4,30 @@ module Me::Cli
   def self.run! args
     command = case args.shift.presence
     when "start", "t" then Me::CliCommands::Start
+    when "list", "ls" then Me::CliCommands::List
     when "-h", "--help"
       get_log_io(:out).puts HELP_MESSAGE
-      Cli.exit! 0
+      Me::Cli.exit! 0
     else
       get_log_io(:out).puts <<-DOC
 #{"bad command".red}
 
 #{HELP_MESSAGE}
       DOC
-      Cli.exit! 1
+      Me::Cli.exit! 1
     end
 
     command = command.new create_opt_parser
     command.parse! args
     command.process!
-    Cli.exit! 0
+    Me::Cli.exit! 0
   end
 
   def self.create_opt_parser
     opt_parser = OptionParser.new
     opt_parser.on_tail("-h", "--help", "Prints this help") do
       get_log_io(:out).puts opt_parser
-      Cli.exit! 0
+      Me::Cli.exit! 0
     end
     opt_parser
   end
@@ -62,6 +63,7 @@ module Me::Cli
 #{"Usage: me COMMAND [ARGS]".blue}
 
 -- COMMANDS
-start, t    adds new task record
+start, t   adds new task record
+list, ls   list records
   DOC
 end

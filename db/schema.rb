@@ -12,8 +12,8 @@
 
 ActiveRecord::Schema[8.0].define(version: 2024_10_12_085204) do
   create_table "tasks", force: :cascade do |t|
-    t.date "start_at"
-    t.date "end_at"
+    t.datetime "start_at"
+    t.datetime "end_at"
     t.string "task"
     t.string "text"
     t.string "labels"
