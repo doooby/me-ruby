@@ -18,6 +18,6 @@ class Me::CommandBase
   end
 
   def log output, message
-    Me::Cli.get_log_io(output).puts message
+    Me::Cli.get_log_io(output).puts message.strip
   end
 end

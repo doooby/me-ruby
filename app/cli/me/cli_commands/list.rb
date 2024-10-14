@@ -1,11 +1,11 @@
 class Me::CliCommands::List < Me::CommandBase
-  KNOWN_COLUMNS = %i[ index id task start end text ]
+  KNOWN_COLUMNS = %w[ index id task start end text ]
 
   def setup_parser
     parser.banner = "Usage: me list [OPTIONS]".blue
 
     parser.on("-cLIST", String, "columns to show (default: #{KNOWN_COLUMNS.join ","})") do |list|
-      list = list.split(",").map(&:to_sym)
+      list = list.split ","
       @show_columns = KNOWN_COLUMNS && list
     end
 
@@ -13,7 +13,7 @@ class Me::CliCommands::List < Me::CommandBase
       @minimize_output = true
     end
 
-    parser.on("-fCOL=VAL", String, "filter recrods (e.g. -fid=1)") do |value|
+    parser.on("-fCOL=VAL", String, "filter recrods (`-f 42`, `-f -1`, `-ftask=me5`)") do |value|
       @filters ||= {}
       result = value.match %r{^(\w+)=(.+)$}
       unless result
@@ -25,14 +25,6 @@ class Me::CliCommands::List < Me::CommandBase
 
   def parse! args
     _ = parser.parse args
-    puts @filters.inspect
-    #     @task_name, @text, *_ = parser.parse args
-    #     if task_name.blank?
-    #       log :out, <<-DOC
-    # #{"missing TASK_NAME".red}
-    #       DOC
-    #       Me::Cli.exit! 1
-    #     end
   end
 
   def process
@@ -52,11 +44,12 @@ class Me::CliCommands::List < Me::CommandBase
     rows = records.map.with_index do |record, record_index|
       columns.map.with_index do |column, column_index|
         case column
-        when :index then (- record_index) - 1
-        when :id then record.id
-        when :task then record.task.to_s
-        when :start then format_time record.start_at
-        when :end then format_time record.end_at
+        when "index" then (- record_index) - 1
+        when "id" then record.id
+        when "task" then record.task.to_s
+        when "text" then record.text.to_s
+        when "start" then format_time record.start_at
+        when "end" then format_time record.end_at
         end
       end
     end

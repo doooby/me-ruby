@@ -7,7 +7,7 @@ module Me::Terminal
       @rows = rows.each do |row|
         row.map!{ _1.to_s }
       end
-      @columns = columns.map!{ _1.to_s }
+      @columns = columns
     end
 
     def each_text_row
