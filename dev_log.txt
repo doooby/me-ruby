@@ -5,7 +5,7 @@ me2 [-] (zig) sqlite integration
 me3 [x] move to ruby
 me4 [x] opt parsing, start cli command, rspecs
 me5 [ ] cli me start
-me5 [ ] cli me ls
+me6 [ ] cli me ls
 
 # log
 date | task | hours | text
@@ -17,3 +17,5 @@ date | start | end | task | text
 241013 12:00 13:30 me3, me4
 241013 17:00 19:30 me4, me5
 241013 22:30 23:00 me6
+241014 20:00 21:00 me6
+241014 23:00 23:45 me6

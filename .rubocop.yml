@@ -9,3 +9,5 @@ inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 
 Style/MethodDefParentheses:
   EnforcedStyle: require_no_parentheses_except_multiline
+Layout/SpaceBeforeBlockBraces:
+  EnforcedStyle: no_space
