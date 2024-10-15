@@ -1,4 +1,43 @@
 module Me::Terminal
+  def self.format_time time
+    return "" unless time
+    time.localtime.strftime "%y%m%d:%H:%M"
+  end
+
+  def self.parse_time text, relative_date: nil
+    relative_date = relative_date&.to_time
+    case text
+    in /^(\d{6}|now)?:(\d\d?):(\d\d?)$/
+      date, hour, min = [ $1, $2, $3 ]
+      date = relative_date || "now" if date.nil?
+      case date
+      when "now"
+        begin
+          Me::Cli.get_now.change hour:, min:
+        rescue ArgumentError
+          raise ArgumentError, "invalid time #{hour}:#{min}"
+        end
+      when String
+        year, month, day = date.scan %r{\d\d}
+        begin
+          Time.new "20#{year}", month, day, hour, min
+        rescue ArgumentError
+          raise ArgumentError, "invalid time #{text}"
+        end
+      when Time
+        begin
+          date.change hour:, min:
+        rescue ArgumentError
+          raise ArgumentError, "invalid time #{hour}:#{min} at realtive: #{date}"
+        end
+      else
+        raise ArgumentError, "invalid date [#{date.class}]:#{date.inspect}"
+      end
+    else
+      raise ArgumentError, "invalid time #{text}"
+    end
+  end
+
   class DataTable
     attr_reader :rows, :columns
     attr_accessor :minimized

@@ -6,7 +6,7 @@ class Me::CliCommands::List < Me::CommandBase
 
     parser.on("-cLIST", String, "columns to show (default: #{KNOWN_COLUMNS.join ","})") do |list|
       list = list.split ","
-      @show_columns = KNOWN_COLUMNS && list
+      @show_columns = Me::CliCommands::List.sanitize_columns_list list
     end
 
     parser.on("-m", String, "minimize output") do |value|
@@ -37,7 +37,11 @@ class Me::CliCommands::List < Me::CommandBase
     columns = @show_columns || KNOWN_COLUMNS
     table = Me::CliCommands::List.tasks_to_table records, columns
     table.minimized = true if @minimize_output
-    table.each_text_row{ log :out, _1 }
+    table.each_text_row{ log :out, _1.strip }
+  end
+
+  def self.sanitize_columns_list list
+    KNOWN_COLUMNS && list
   end
 
   def self.tasks_to_table records, columns
@@ -48,16 +52,11 @@ class Me::CliCommands::List < Me::CommandBase
         when "id" then record.id
         when "task" then record.task.to_s
         when "text" then record.text.to_s
-        when "start" then format_time record.start_at
-        when "end" then format_time record.end_at
+        when "start" then Me::Terminal.format_time record.start_at
+        when "end" then Me::Terminal.format_time record.end_at
         end
       end
     end
     Me::Terminal::DataTable.new rows, columns
-  end
-
-  def self.format_time time
-    return "" unless time
-    time.localtime.strftime "%y%m%d:%H:%M"
   end
 end

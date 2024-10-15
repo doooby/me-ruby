@@ -39,6 +39,14 @@ module Me::Cli
     }
   end
 
+  def self.get_now
+    @now_time || Time.now
+  end
+
+  def self.set_now time
+    @now_time = time
+  end
+
   def self.exit! result
     if @embeded_mode
       raise ExitedException, "status: #{result}"
