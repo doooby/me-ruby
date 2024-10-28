@@ -1,10 +1,11 @@
 class Me::CliCommands::List < Me::CommandBase
-  KNOWN_COLUMNS = %w[ index id task start end text ]
+  COLUMNS_TO_SHOW = %w[ id task start end text ]
+  COLUMNS_TO_FILTER = %w[ id task start end text ]
 
   def setup_parser
     parser.banner = "Usage: me list [OPTIONS]".blue
 
-    parser.on("-cLIST", String, "columns to show (default: #{KNOWN_COLUMNS.join ","})") do |list|
+    parser.on("-cLIST", String, "columns to show (default: #{COLUMNS_TO_SHOW.join ","})") do |list|
       list = list.split ","
       @show_columns = Me::CliCommands::List.sanitize_columns_list list
     end
@@ -13,13 +14,17 @@ class Me::CliCommands::List < Me::CommandBase
       @minimize_output = true
     end
 
-    parser.on("-fCOL=VAL", String, "filter recrods (`-f 42`, `-f -1`, `-ftask=me5`)") do |value|
-      @filters ||= {}
-      result = value.match %r{^(\w+)=(.+)$}
-      unless result
-        raise "invalid filter `#{value}`"
+    parser.on("-fCOL=VAL", String, "filter recrods (`-f 42`, `-ftask=me5`)") do |value|
+      case value
+      in /^(\d+)$/
+        id = $1
+        add_filter! "id", id
+      in /^(\w+)=(.+)$/
+        column, value = [ $1, $2 ]
+        add_filter! column, value
+      else
+        raise ArgumentError, "invalid filter #{value}"
       end
-      @filters[result[1]] = result[2]
     end
   end
 
@@ -28,27 +33,24 @@ class Me::CliCommands::List < Me::CommandBase
   end
 
   def process
-    scope = Task.all
-    scope = scope.order id: :desc
-    scope = scope.limit 10
+    scope = list_scope.order(id: :desc).limit(10)
     records = scope.to_a
     return if records.length.zero?
 
-    columns = @show_columns || KNOWN_COLUMNS
+    columns = @show_columns || COLUMNS_TO_SHOW
     table = Me::CliCommands::List.tasks_to_table records, columns
     table.minimized = true if @minimize_output
     table.each_text_row{ log :out, _1.strip }
   end
 
   def self.sanitize_columns_list list
-    KNOWN_COLUMNS && list
+    COLUMNS_TO_SHOW && list
   end
 
   def self.tasks_to_table records, columns
-    rows = records.map.with_index do |record, record_index|
-      columns.map.with_index do |column, column_index|
+    rows = records.map do |record|
+      columns.map do |column|
         case column
-        when "index" then (- record_index) - 1
         when "id" then record.id
         when "task" then record.task.to_s
         when "text" then record.text.to_s
@@ -58,5 +60,28 @@ class Me::CliCommands::List < Me::CommandBase
       end
     end
     Me::Terminal::DataTable.new rows, columns
+  end
+
+  private
+
+  def add_filter! column, value
+    unless COLUMNS_TO_FILTER.include? column
+      raise ArgumentError, "unknown column filter #{column}"
+    end
+
+    arel_attribute = Task.arel_table[column]
+    condition = case column
+    when "id", "task"
+      arel_attribute.eq value
+    when "text"
+      arel_attribute.matches "%#{value}%"
+    else
+      raise ArgumentError, "unknown column filter #{column}"
+    end
+    @list_scope = list_scope.where condition
+  end
+
+  def list_scope
+    @list_scope ||= Task.all
   end
 end

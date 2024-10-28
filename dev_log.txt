@@ -23,3 +23,5 @@ date | start | end | task | text
 241015:20:00 21:21 me6
 241015 21:44 23:00 me5 date format
 241016 12:00 13:00 me5 start refactoring
+241023 20:00 21:00 me6 filtering
+241028 17:00 17:30 me6 filter specs

@@ -56,7 +56,7 @@ module Me::Terminal
       end
 
       unless minimized
-        header = String.new "│ "
+        header = +"│ "
         columns.each_with_index do |text, index|
           header << " │ " unless index.zero?
           Me::Terminal.push_cell_into! header, text, column_sizes[index]
@@ -64,7 +64,7 @@ module Me::Terminal
         header << " │"
         yield header
 
-        header_separator = String.new "├"
+        header_separator = +"├"
         chars = 1 + column_sizes.sum + (column_sizes.length * 3) - 1
         header_separator << ("-"  * chars)
         yield header_separator
@@ -72,7 +72,7 @@ module Me::Terminal
       end
 
       rows.each do |row|
-        text = minimized ? String.new : String.new("│ ")
+        text = minimized ? +"" : +"│ "
         separator = minimized ? " " : "   "
         columns.length.times do |index|
           text << separator unless index.zero?
