@@ -6,6 +6,7 @@ me3 [x] move to ruby
 me4 [x] opt parsing, start cli command, rspecs
 me5 [ ] cli me start
 me6 [ ] cli me ls
+me7 [ ] cli me edit
 
 # log
 date | task | hours | text
@@ -25,3 +26,4 @@ date | start | end | task | text
 241016 12:00 13:00 me5 start refactoring
 241023 20:00 21:00 me6 filtering
 241028 17:00 17:30 me6 filter specs
+241108 14:30 16:00 me7 refactoring

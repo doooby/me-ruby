@@ -1,13 +1,16 @@
 require 'rails_helper'
-require 'open3'
 
 RSpec.describe 'CLI: start', type: :cli do
   after :each do
     Me::Cli.set_now nil
   end
 
-  it '``'.yellow do
-    result = fake_cli! Me::CliCommands::Start, ""
+  def invoke! value
+    fake_cli! Me::CliCommands::Start, value
+  end
+
+  with_value '' do |value|
+    result = invoke! value
     expect(result).to eq({
       exit: "status: 1",
       stdout: <<-DOC,
@@ -17,9 +20,9 @@ RSpec.describe 'CLI: start', type: :cli do
     })
   end
 
-  it '`t me5`'.yellow do
+  with_value 'me5' do |value|
     Me::Cli.set_now Time.new(2024, 10, 14, 10, 05)
-    result = fake_cli! Me::CliCommands::Start, 'me5'
+    result = invoke! value
     record = Task.last
     expect(result).to eq({
       exit: "status: 0",
@@ -35,9 +38,9 @@ RSpec.describe 'CLI: start', type: :cli do
     expect(record.end_at).to be_nil
   end
 
-  it '`t me5 -t"first task"`'.yellow do
+  with_value 'me5 -t"first task"' do |value|
     Me::Cli.set_now Time.new(2024, 10, 14, 10, 05)
-    result = fake_cli! Me::CliCommands::Start, 'me5 -t"first task"'
+    result = invoke! value
     record = Task.last
     expect(result).to eq({
       exit: "status: 0",
@@ -52,40 +55,4 @@ RSpec.describe 'CLI: start', type: :cli do
     expect(Me::Terminal.format_time record.start_at).to eq("241014:10:05")
     expect(record.end_at).to be_nil
   end
-
-  #   it '`t me5 -t"first task"`'.yellow do
-  #     result = fake_cli! Me::CliCommands::Start, 'me5 -t"first task"'
-  #     expect(result).to eq({
-  #       exit: "status: 0",
-  #       stdout: <<-DOC,
-  # #{"DONE".green}
-  #       DOC
-  #       stderr: ""
-  #     })
-  #     expect_these_tasks [
-  #       ->(record) {
-  #         expect(record.created_at).to be_present
-  #         expect(record.task).to eq("me5")
-  #         expect(record.text).to eq("first task")
-  #       }
-  #     ]
-  #   end
-
-  #   t '`t me5 -t"first task"`'.yellow do
-  #     result = fake_cli! Me::CliCommands::Start, 'me5 -t"first task"'
-  #     expect(result).to eq({
-  #       exit: "status: 0",
-  #       stdout: <<-DOC,
-  # #{"DONE".green}
-  #       DOC
-  #       stderr: ""
-  #     })
-  #     expect_these_tasks [
-  #       ->(record) {
-  #         expect(record.created_at).to be_present
-  #         expect(record.task).to eq("me5")
-  #         expect(record.text).to eq("first task")
-  #       }
-  #     ]
-  #   end
 end

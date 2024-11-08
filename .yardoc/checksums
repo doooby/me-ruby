@@ -1,0 +1,11 @@
+app/cli/me/cli.rb c3fefe70070dfe57ca539f5479a93b94f1f1fb38
+app/models/task.rb 494998e01da897d96ae3bf91974004be7de43616
+app/cli/me/terminal.rb 0788dd90c67d581b60f0e77a2032a60b6be18f4c
+app/cli/me/command_base.rb 2d528516abf168be8670c4e962ba95a7c3124908
+app/jobs/application_job.rb 2d7aea448b6f7b6a9c182cd5369df41b5f338a7c
+app/cli/me/cli_commands/edit.rb 2ead2f34663076f4ebb641c417b33d4f8ae99957
+app/cli/me/cli_commands/list.rb 6df3c7af83d39a0972dcb390292ee7a51fd204c1
+app/cli/me/cli_commands/start.rb c0bf6f47392fa8a8e5acec6d1daa94dfa188675d
+app/models/application_record.rb 3ddc096670c55bf364746588cd1f8471008ca6e8
+app/helpers/application_helper.rb eef3d3adce96afe8b14c19b6135323f47543d979
+app/controllers/application_controller.rb 62d0cd5ba72c9666e83cbc2addce7237799f2c9b

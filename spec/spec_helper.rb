@@ -89,4 +89,4 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 end
 
-require "cli/specs_extension"
+require "spec_extensions"

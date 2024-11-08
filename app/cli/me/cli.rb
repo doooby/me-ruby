@@ -5,6 +5,7 @@ module Me::Cli
     command = case args.shift.presence
     when "start", "t" then Me::CliCommands::Start
     when "list", "ls" then Me::CliCommands::List
+    when "edit", "e" then Me::CliCommands::Edit
     when "-h", "--help"
       get_log_io(:out).puts HELP_MESSAGE
       Me::Cli.exit! 0
@@ -73,5 +74,6 @@ module Me::Cli
 -- COMMANDS
 start, t   adds new task record
 list, ls   list records
+edit, e    edit a record
   DOC
 end

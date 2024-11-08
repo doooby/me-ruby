@@ -8,10 +8,11 @@ RSpec.describe 'CLI:', type: :cli do
 -- COMMANDS
 start, t   adds new task record
 list, ls   list records
+edit, e    edit a record
   DOC
 
-  it '``'.yellow do
-    result = cli! ""
+  with_value '' do |value|
+    result = run_cli! value
     expect(result[:stdout]).to eq(<<-DOC
 #{"bad command".red}
 
@@ -21,8 +22,8 @@ list, ls   list records
     expect(result[:status].success?).to be(false)
   end
 
-  it '`-h`'.yellow do
-    result = cli! "-h"
+  with_value '-h' do |value|
+    result = run_cli! value
     expect(result[:stdout]).to eq(HELP_MESSAGE)
     expect(result[:status].success?).to be(true)
   end

@@ -4,9 +4,9 @@ RSpec.configure do |config|
   module CliHelper
     extend RSpec::SharedContext
 
-    let(:cli_path) { Rails.root.join "bin/cli.rb" }
+    let(:cli_path){ Rails.root.join "bin/cli.rb" }
 
-    def cli! command
+    def run_cli! command
       stdout, stderr, status = Open3.capture3 "#{cli_path} #{command}"
       { stdout:, stderr:, status: }
     end
@@ -40,6 +40,15 @@ RSpec.configure do |config|
       end
     end
   end
-
   config.include CliHelper, type: :cli
+
+
+  module DescibreScopeHelper
+    def with_value value, &block
+      it "`#{value}`".yellow do
+        instance_exec value, &block
+      end
+    end
+  end
+  config.extend DescibreScopeHelper
 end
