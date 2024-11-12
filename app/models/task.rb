@@ -1,7 +1,5 @@
 class Task < ApplicationRecord
   module CliFilters
-    COLUMNS = %w[ id task text ]
-
     def self.parse_column_value filter
       case filter
       in /^(\d+)$/
@@ -15,16 +13,13 @@ class Task < ApplicationRecord
     end
 
     def self.apply scope, column, value
-      unless CliFilters::COLUMNS.include? column
-        raise CliFilters::Error, "unknown column #{column}"
-      end
-
-      arel_attribute = Task.arel_table[column]
       condition = case column
       when "id", "task"
-        arel_attribute.eq value
+        Task.arel_table[column].eq value
       when "text"
-        arel_attribute.matches "%#{value}%"
+        Task.arel_table[column].matches "%#{value}%"
+      else
+        raise CliFilters::Error, "unknown column #{column}"
       end
       scope.where condition
     end
@@ -33,32 +28,79 @@ class Task < ApplicationRecord
   end
 
   module CliEdits
-    ATTRIBUTES = %w[ task text start end ]
-
-    def self.parse_attr_value input
+    def self.parse_attr_value input, task
       attr, raw_value = case input
       in /^(\w+)=(.+)$/
           [ $1, $2 ]
       else
-          raise ClieEdits::Error, "invalid input #{input}"
-      end
-
-      unless CliEdits::ATTRIBUTES.include? attr
-        raise CliEdits::Error, "unknown attribute #{attr}"
+          raise CliEdits::Error, "invalid attribute input #{input}"
       end
 
       value = case attr
       when "task", "text"
         raw_value
-      when "start", "end"
-        parse_time_input raw_value
+      when "start"
+        parse_start_time_input raw_value, task.start_time
+      when "end"
+        parse_end_time_input raw_value, task
+      else
+        raise CliEdits::Error, "unknown attribute #{attr}"
       end
 
       [ attr, value ]
     end
 
-    def self.parse_time_input value
-      raise "niy"
+    def self.parse_start_time_input value, relative_time
+      date_component, time_component = case value
+      in /^(.*):(.*)$/
+        [ $1, $2 ]
+      else
+        raise CliEdits::Error, "invalid date:time input #{value}"
+      end
+
+      time_now = Me::Cli.get_now
+      original_time = relative_time&.getlocal
+
+      date_parts = case date_component
+      in /^$/
+        [ time_now.year, time_now.month, time_now.day ]
+      in /^_$/
+        unless original_time
+          raise CliEdits::Error, "invalid date:time input #{value} - current attribute is empty"
+        end
+        [ original_time.year, original_time.month, original_time.day ]
+      in /^(\d\d)(\d\d)(\d\d)$/
+        date_parts = [ "20#{$1}".to_i, $2.to_i, $3.to_i ]
+        if Date.valid_date?(*date_parts)
+          date_parts
+        else
+          raise CliEdits::Error, "invalid date:time input #{value} - bad date"
+        end
+      else
+        raise CliEdits::Error, "invalid date:time input #{value}  - bad date"
+      end
+
+      time_parts = case time_component
+      in /^$/
+        [ time_now.hour, time_now.min ]
+      in /^_$/
+        unless original_time
+          raise CliEdits::Error, "invalid date:time input #{value} - current attribute is empty"
+        end
+        [ original_time.hour, original_time.min ]
+      in /^(\d\d)(\d\d)$/
+        time_parts = [ $1.to_i, $2.to_i ]
+        begin
+          Time.new(*date_parts, *time_parts)
+        rescue ArgumentError => _
+          raise CliEdits::Error, "invalid date:time input #{value} - bad time"
+        end
+        time_parts
+      else
+        raise CliEdits::Error, "invalid date:time input #{value} - bad time"
+      end
+
+      Time.new(*date_parts, *time_parts)
     end
 
     class Error < StandardError; end

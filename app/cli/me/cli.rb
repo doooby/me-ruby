@@ -44,6 +44,8 @@ module Me::Cli
     @now_time || Time.now
   end
 
+  # this is only for testing purposes, as it freezes the whole app at a specified time
+  # use regular Time, as we use UTC internaly and we need current system time zone/time shift
   def self.set_now time
     @now_time = time
   end

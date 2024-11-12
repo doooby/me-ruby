@@ -44,8 +44,12 @@ RSpec.configure do |config|
 
 
   module DescibreScopeHelper
-    def with_value value, &block
-      it "`#{value}`".yellow do
+    def with_value value, message = nil, &block
+      case_label = [
+        "`#{value}`".yellow,
+        (" #{message}" if message)
+      ].compact.join('')
+      it case_label do
         instance_exec value, &block
       end
     end
