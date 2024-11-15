@@ -33,76 +33,75 @@ class Task < ApplicationRecord
       in /^(\w+)=(.+)$/
           [ $1, $2 ]
       else
-          raise CliEdits::Error, "invalid attribute input #{input}"
+          raise CliEdits::InvalidInputError, "bad format of `#{input}`"
       end
 
       value = case attr
       when "task", "text"
         raw_value
       when "start"
-        parse_start_time_input raw_value, task.start_time
-      when "end"
-        parse_end_time_input raw_value, task
+        parse_time_input(
+          raw_value,
+          "" => Me::Cli.get_now,
+          "_" => task.start_time.getlocal
+        )
+      # when "end"
+      #   parse_end_time_input raw_value, task
       else
-        raise CliEdits::Error, "unknown attribute #{attr}"
+        raise CliEdits::InvalidInputError, "unknown attribute `#{attr}`"
       end
 
       [ attr, value ]
     end
 
-    def self.parse_start_time_input value, relative_time
+    def self.parse_time_input value, **substitutions
       date_component, time_component = case value
       in /^(.*):(.*)$/
         [ $1, $2 ]
       else
-        raise CliEdits::Error, "invalid date:time input #{value}"
+        raise CliEdits::InvalidInputError, "bad format of date:time in `#{value}`"
       end
 
-      time_now = Me::Cli.get_now
-      original_time = relative_time&.getlocal
+      substituted_keys = substitutions.keys
 
-      date_parts = case date_component
-      in /^$/
-        [ time_now.year, time_now.month, time_now.day ]
-      in /^_$/
-        unless original_time
-          raise CliEdits::Error, "invalid date:time input #{value} - current attribute is empty"
+      date_parts = if substituted_keys.include? date_component
+        date = substitutions[date_component]
+        unless date
+          raise CliEdits::InvalidInputError, "substituted date is nil in `#{date_component}`"
         end
-        [ original_time.year, original_time.month, original_time.day ]
-      in /^(\d\d)(\d\d)(\d\d)$/
+        [ date.year, date.month, date.day ]
+      elsif date_component.match(/^(\d\d)(\d\d)(\d\d)$/)
         date_parts = [ "20#{$1}".to_i, $2.to_i, $3.to_i ]
         if Date.valid_date?(*date_parts)
           date_parts
         else
-          raise CliEdits::Error, "invalid date:time input #{value} - bad date"
+          raise CliEdits::InvalidInputError, "bad date in `#{value}`"
         end
       else
-        raise CliEdits::Error, "invalid date:time input #{value}  - bad date"
+        raise CliEdits::InvalidInputError, "bad date in `#{value}`"
       end
 
-      time_parts = case time_component
-      in /^$/
-        [ time_now.hour, time_now.min ]
-      in /^_$/
-        unless original_time
-          raise CliEdits::Error, "invalid date:time input #{value} - current attribute is empty"
+      time_parts = if substituted_keys.include? time_component
+        time = substitutions[time_component]
+        unless time
+          raise CliEdits::InvalidInputError, "substituted time is nil in `#{time_component}`"
         end
-        [ original_time.hour, original_time.min ]
-      in /^(\d\d)(\d\d)$/
+        [ time.hour, time.min ]
+      elsif time_component.match(/^(\d\d)(\d\d)$/)
         time_parts = [ $1.to_i, $2.to_i ]
         begin
           Time.new(*date_parts, *time_parts)
         rescue ArgumentError => _
-          raise CliEdits::Error, "invalid date:time input #{value} - bad time"
+          raise CliEdits::InvalidInputError, "bad time in `#{value}`"
         end
         time_parts
       else
-        raise CliEdits::Error, "invalid date:time input #{value} - bad time"
+        raise CliEdits::InvalidInputError, "bad time in `#{value}`"
       end
 
       Time.new(*date_parts, *time_parts)
     end
 
-    class Error < StandardError; end
+    class InvalidInputError < StandardError; end
   end
 end

@@ -28,4 +28,6 @@ date | start | end | task | text
 241028 17:00 17:30 me6 filter specs
 241108 14:30 16:00 me7 refactoring
 241110 20:00 22:00 me7 date parsing
-241112 20:00
+241112 20:00 20:30 me7 date:time parsing specs
+241115 12:30 13:00 me7 date:time input specs refact
+241115 13:00 me7
