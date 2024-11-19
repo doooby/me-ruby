@@ -12,23 +12,33 @@ RSpec.describe 'CLI: edit', type: :cli do
   with_value '' do |value|
     result = invoke! value
     expect(result).to eq({
-      exit: "status: 1",
-      stdout: <<-DOC,
+      exit: 1,
+      stdout: <<-DOC
 #{"missing TASK_ID".red}
       DOC
-      stderr: ""
     })
   end
 
-  #   with_value '101 -atask=ticket123' do |value|
-  #     result = invoke! value
-  #     expect(result).to eq({
-  #       exit: "status: 0",
-  #       stdout: <<-DOC,
-  # #{"what is happening".red}
-  # // it needs to confirm the edit in default mode
-  #       DOC
-  #       stderr: ""
-  #     })
-  #   end
+  with_value '999' do |value|
+    result = invoke! value
+    expect(result).to eq({
+      exit: 1,
+      stdout: <<-DOC
+#{"no task with id 999".red}
+      DOC
+    })
+  end
+
+  with_value '101 -at=ticket123' do |value|
+    result = invoke! value
+    expect(result).to eq({
+      stdout: <<-DOC
+│ id  │ task      │ start        │ end          │ text            │
+├-----------------------------------------------------------------┤
+│ 101   t1          240511:01:30   240511:03:00   Wash the dishes |
+│ 101   ticket123   240511:01:30   240511:03:00   Wash the dishes |
+└-----------------------------------------------------------------┘
+      DOC
+    })
+  end
 end

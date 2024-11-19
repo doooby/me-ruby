@@ -1,12 +1,12 @@
 class Me::CliCommands::Edit < Me::CommandBase
-  attr_accessor :task, :new_attributes
+  attr_accessor :task, :attributes
 
   def setup_parser
     parser.banner = "Usage: me edit TASK_ID [OPTIONS]".blue
 
     parser.on("-aATTRIBUTE=VALUE", String, "attribute to set") do |value|
       attr, value = Task::Attributes.parse_input_pair value, task
-      new_attributes[attr] = value
+      attributes[attr] = value
     end
   end
 
@@ -22,23 +22,22 @@ class Me::CliCommands::Edit < Me::CommandBase
     @task = Task.find_by id: task_id
     unless task
       log :out, <<-DOC
-#{"no task with id  #{task_id}".red}
+#{"no task with id #{task_id}".red}
       DOC
       Me::Cli.exit! 1
     end
 
-    @new_attributes = {}
+    @attributes = {}
     _ = parser.parse args
   end
 
   def process
-    puts new_attributes
-    raise "niy"
-    # task = Task.create!(start_at: Me::Cli.get_now, task: task_name, text:)
+    original_task = Task.find task.id
+    task_attributes = Task::Attributes.map_attrs_to_table_fields attributes
+    task.assign_attributes task_attributes
+    task.save!
 
-    # columns = Me::CliCommands::List.sanitize_columns_list %w[ id task start text ]
-    # table = Me::CliCommands::List.tasks_to_table [ task ], columns
-    # table.minimized = true
-    # table.each_text_row{ log :out, _1.strip.green }
+    table = Task::Print.tasks_to_table [ original_task, task ]
+    table.each_text_row{ log :out, _1.strip }
   end
 end
