@@ -17,8 +17,9 @@ RSpec.describe 'CLI: start', type: :cli do
     expect(result).to eq({
       stdout: <<-DOC
 │ id  │ task │ start        │ end │ text │
-├-----------------------------------------
+├----------------------------------------┤
 │ 107          020202:02:02              |
+└----------------------------------------┘
       DOC
     })
   end
@@ -30,8 +31,9 @@ RSpec.describe 'CLI: start', type: :cli do
       expect(result).to eq({
         stdout: <<-DOC
 │ id  │ task │ start        │ end │ text         │
-├-------------------------------------------------
+├------------------------------------------------┤
 │ 107   me5    020202:02:02         this is text |
+└------------------------------------------------┘
         DOC
       })
       expect(record.created_at).to be_present
@@ -48,8 +50,9 @@ RSpec.describe 'CLI: start', type: :cli do
       expect(result).to eq({
         stdout: <<-DOC
 │ id  │ task │ start        │ end          │ text │
-├--------------------------------------------------
+├-------------------------------------------------┤
 │ 107          020202:02:02   020202:20:00        |
+└-------------------------------------------------┘
         DOC
       })
       expect(record.created_at).to be_present

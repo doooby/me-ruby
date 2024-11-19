@@ -55,6 +55,7 @@ module Me::Terminal
         [ items_max, minimized ? 0 : column.length ].max
       end
 
+      table_row = nil
       unless minimized
         header = +"│ "
         columns.each_with_index do |text, index|
@@ -64,11 +65,11 @@ module Me::Terminal
         header << " │"
         yield header
 
-        header_separator = +"├"
+        table_row = +"├"
         chars = 1 + column_sizes.sum + (column_sizes.length * 3) - 1
-        header_separator << ("-"  * chars)
-        yield header_separator
-
+        table_row << ("-"  * chars)
+        table_row[-1] = "┤"
+        yield table_row
       end
 
       rows.each_with_index do |row, row_index|
@@ -80,6 +81,12 @@ module Me::Terminal
         end
         text << " |" unless minimized
         yield text, row_index
+      end
+
+      unless minimized
+        table_row[0] = "└"
+        table_row[-1] = "┘"
+        yield table_row
       end
     end
   end
