@@ -18,11 +18,14 @@ RSpec.configure do |config|
       command.process!
       Me::Cli.exit! 0
     rescue Me::Cli::ExitedException => exception
-      {
-        exit: exception.message,
-        stdout: Me::Cli.get_log_io(:out).string,
-        stderr: Me::Cli.get_log_io(:err).string
+      exit_status = exception.message[-1].to_i
+      stderr = Me::Cli.get_log_io(:err).string.presence
+      result = {
+        stdout: Me::Cli.get_log_io(:out).string
       }
+      result[:exit] = exit_status unless exit_status.zero?
+      result[:stderr] = stderr if stderr
+      result
     ensure
       Me::Cli.instance_variable_set "@embeded_mode", nil
     end

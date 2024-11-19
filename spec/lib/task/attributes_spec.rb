@@ -1,16 +1,30 @@
 require 'rails_helper'
 
-RSpec.describe 'Task::CliEdits' do
+RSpec.describe 'Task::Attributes' do
+  describe '.parse_input_pair' do
+    def invoke! *args, **kwargs
+      Task::Attributes.parse_input_pair *args, **kwargs
+    end
+
+    def task **attrs
+      Task.new **attrs
+    end
+
+    with_value 'i=123' do |value|
+      expect(invoke! value, task).to eq([ 'id', 123 ])
+    end
+  end
+
   describe '.parse_time_input' do
     let(:point_in_time){ Time.new 2002, 2, 2, 2, 2 }
 
     def invoke! *args, **kwargs
-      Task::CliEdits.parse_time_input *args, **kwargs
+      Task::Attributes.parse_time_input *args, **kwargs
     end
 
     with_value '%', '(invalid)' do |value|
       expect{ invoke! value }.to raise_error(
-        Task::CliEdits::InvalidInputError, 'bad format of date:time in `%`'
+        Task::Attributes::InputError, 'bad format of date:time in `%`'
       )
     end
 
@@ -41,7 +55,7 @@ RSpec.describe 'Task::CliEdits' do
     with_value '_:1516', '(substitution is empty)' do |value|
       subs = { '_' => nil }
       expect{ invoke! value, **subs }.to raise_error(
-        Task::CliEdits::InvalidInputError, 'substituted date is nil in `_`'
+        Task::Attributes::InputError, 'substituted date is nil in `_`'
       )
     end
 
@@ -53,25 +67,25 @@ RSpec.describe 'Task::CliEdits' do
     with_value '240103:_', '(substitution is empty)' do |value|
       subs = { '_' => nil }
       expect{ invoke! value, **subs }.to raise_error(
-        Task::CliEdits::InvalidInputError, 'substituted time is nil in `_`'
+        Task::Attributes::InputError, 'substituted time is nil in `_`'
       )
     end
 
     with_value '240103', '(missing time)' do |value|
       expect{ invoke! value }.to raise_error(
-        Task::CliEdits::InvalidInputError, 'bad format of date:time in `240103`'
+        Task::Attributes::InputError, 'bad format of date:time in `240103`'
       )
     end
 
     with_value '243103:0000', '(bad date)' do |value|
       expect{ invoke! value }.to raise_error(
-        Task::CliEdits::InvalidInputError, 'bad date in `243103:0000`'
+        Task::Attributes::InputError, 'bad date in `243103:0000`'
       )
     end
 
     with_value '240103:2500', '(bad time)' do |value|
       expect{ invoke! value }.to raise_error(
-        Task::CliEdits::InvalidInputError, 'bad time in `240103:2500`'
+        Task::Attributes::InputError, 'bad time in `240103:2500`'
       )
     end
   end

@@ -71,14 +71,15 @@ module Me::Terminal
 
       end
 
-      rows.each do |row|
+      rows.each_with_index do |row, row_index|
         text = minimized ? +"" : +"│ "
         separator = minimized ? " " : "   "
         columns.length.times do |index|
           text << separator unless index.zero?
           Me::Terminal.push_cell_into! text, row[index], column_sizes[index]
         end
-        yield text
+        text << " |" unless minimized
+        yield text, row_index
       end
     end
   end

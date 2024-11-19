@@ -4,8 +4,8 @@ class Me::CliCommands::Edit < Me::CommandBase
   def setup_parser
     parser.banner = "Usage: me edit TASK_ID [OPTIONS]".blue
 
-    parser.on("-aATTR=VAL", String, "records attribute to set") do |value|
-      attr, value = Task::CliEdits.parse_attr_value value, task
+    parser.on("-aATTRIBUTE=VALUE", String, "attribute to set") do |value|
+      attr, value = Task::Attributes.parse_input_pair value, task
       new_attributes[attr] = value
     end
   end
