@@ -4,9 +4,13 @@ me1 [-] (zig) use zig-clap to parse args
 me2 [-] (zig) sqlite integration
 me3 [x] move to ruby
 me4 [x] opt parsing, start cli command, rspecs
-me5 [ ] cli me start
+me5 [x] cli me start
 me6 [ ] cli me ls
-me7 [ ] cli me edit
+me7 [x] cli me edit
+me8 []
+
+# ideas
+- when create & edit, color the output green / red
 
 # log
 date | task | hours | text
@@ -31,4 +35,5 @@ date | start | end | task | text
 241112 20:00 20:30 me7 date:time parsing specs
 241115 12:30 13:00 me7 date:time input specs refact
 241116 12:00 14:00 me5 new task attributes
-241118 19:15
+241118 19:15 20:00 me7 basic cli done
+241120 08:20       me6 filter attr shortcuts

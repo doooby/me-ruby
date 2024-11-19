@@ -1,20 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Task::Attributes' do
-  describe '.parse_input_pair' do
-    def invoke! *args, **kwargs
-      Task::Attributes.parse_input_pair *args, **kwargs
-    end
-
-    def task **attrs
-      Task.new **attrs
-    end
-
-    with_value 'i=123' do |value|
-      expect(invoke! value, task).to eq([ 'id', 123 ])
-    end
-  end
-
   describe '.parse_time_input' do
     let(:point_in_time){ Time.new 2002, 2, 2, 2, 2 }
 

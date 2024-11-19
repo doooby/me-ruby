@@ -1,15 +1,15 @@
 class Task < ApplicationRecord
   module Print
-    TABLE_COLUMNS = %w[ id task start end text ]
+    TABLE_COLUMNS = %w[ id task start end message ]
     def self.tasks_to_table records, columns = TABLE_COLUMNS
       rows = records.map do |record|
         columns.map do |column|
           case column
-          when "id" then record.id
-          when "task" then record.task.to_s
-          when "text" then record.text.to_s
-          when "start" then Me::Terminal.format_time record.start_at
-          when "end" then Me::Terminal.format_time record.end_at
+          when "i", "id" then record.id
+          when "t", "task" then record.task.to_s
+          when "m", "message" then record.text.to_s
+          when "s", "start" then Me::Terminal.format_time record.start_at
+          when "e", "end" then Me::Terminal.format_time record.end_at
           end
         end
       end
@@ -17,32 +17,16 @@ class Task < ApplicationRecord
     end
   end
 
-  module CliFilters
-    def self.parse_column_value filter
-      case filter
-      in /^(\d+)$/
-          id = $1
-          [ "id", id ]
-      in /^(\w+)=(.+)$/
-          [ $1, $2 ]
-      else
-          raise CliFilters::Error, "invalid filter #{filter}"
-      end
+  def self.filter_by_attr_value attr, value
+    condition = case attr
+    when "id", "task"
+      Task.arel_table[attr].eq value
+    when "message"
+      Task.arel_table["text"].matches "%#{value}%"
+    else
+      raise Attributes::NotSpecifiedError, "cannot filter by #{attr}"
     end
-
-    def self.apply scope, column, value
-      condition = case column
-      when "id", "task"
-        Task.arel_table[column].eq value
-      when "text"
-        Task.arel_table[column].matches "%#{value}%"
-      else
-        raise CliFilters::Error, "unknown column #{column}"
-      end
-      scope.where condition
-    end
-
-    class Error < StandardError; end
+    where condition
   end
 
   module Attributes
@@ -61,41 +45,44 @@ class Task < ApplicationRecord
     }
 
     class InputError < StandardError; end
+    class NotSpecifiedError < StandardError; end
 
-    def self.parse_input_pair input, task
-      attr, raw_value = case input
+    def self.parse_input_pair input
+      attr, value = case input
+      in /^(\d+)/
+        [ "id", $1 ]
       in /^(\w+)=(.+)$/
-          [ $1, $2 ]
+        [ $1, $2 ]
       else
-          raise InputError, "bad format of `#{input}`"
+        raise InputError, "bad format of `#{input}`"
       end
 
       attr = SHORTUCTS[attr] if SHORTUCTS.key? attr
+      [ attr, value ]
+    end
 
-
-      value = case attr
+    def self.process_value attr, raw_value, task: nil
+      case attr
       when "id"
         raw_value.to_i
       when "task", "message"
-        raw_value
+        raw_value.to_s
       when "start"
         parse_time_input(
           raw_value,
           "" => Me::Cli.get_now,
-          "_" => task.start_at&.getlocal
+          "_" => task&.start_at&.getlocal
         )
       when "end"
         parse_time_input(
           raw_value,
           "" => Me::Cli.get_now,
-          "_" => task.end_at&.getlocal,
-          "s" => task.start_at&.getlocal
+          "_" => task&.end_at&.getlocal,
+          "s" => task&.start_at&.getlocal
         )
       else
         raise InputError, "unknown attribute `#{attr}`"
       end
-
-      [ attr, value ]
     end
 
     def self.parse_time_input value, **substitutions

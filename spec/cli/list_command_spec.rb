@@ -11,7 +11,7 @@ RSpec.describe 'CLI: list', type: :cli do
     result = invoke! value
     expect(result).to eq({
       stdout: <<-DOC
-│ id  │ task │ start        │ end          │ text                   │
+│ id  │ task │ start        │ end          │ message                │
 ├-------------------------------------------------------------------┤
 │ 106   t6     240813:02:00   240813:04:00   Mow the lawn           |
 │ 105   t5     240601:21:00   240601:22:00   Clean the bathroom     |
@@ -38,11 +38,11 @@ RSpec.describe 'CLI: list', type: :cli do
     })
   end
 
-  with_value '-c task,id,text' do |value|
+  with_value '-c task,id,message' do |value|
     result = invoke! value
     expect(result).to eq({
       stdout: <<-DOC
-│ task │ id  │ text                   │
+│ task │ id  │ message                │
 ├-------------------------------------┤
 │ t6     106   Mow the lawn           |
 │ t5     105   Clean the bathroom     |
@@ -55,7 +55,7 @@ RSpec.describe 'CLI: list', type: :cli do
     })
   end
 
-  with_value '-mcid' do |value|
+  with_value '-mci' do |value|
     result = invoke! value
     expect(result).to eq({
       stdout: <<-DOC
@@ -69,7 +69,7 @@ RSpec.describe 'CLI: list', type: :cli do
     })
   end
 
-  with_value '-mcid -f102' do |value|
+  with_value '-mci -f102' do |value|
     result = invoke! value
     expect(result).to eq({
       stdout: <<-DOC
@@ -78,7 +78,7 @@ RSpec.describe 'CLI: list', type: :cli do
     })
   end
 
-  with_value '-mcid -ftask=t3' do |value|
+  with_value '-mci -ft=t3' do |value|
     result = invoke! value
     expect(result).to eq({
       stdout: <<-DOC
@@ -87,7 +87,7 @@ RSpec.describe 'CLI: list', type: :cli do
     })
   end
 
-  with_value '-mcid -ftext=ras' do |value|
+  with_value '-mci -fm=ras' do |value|
     result = invoke! value
     expect(result).to eq({
       stdout: <<-DOC

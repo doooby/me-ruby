@@ -13,9 +13,10 @@ class Me::CliCommands::List < Me::CommandBase
       @minimize_output = true
     end
 
-    parser.on("-fCOL=VAL", String, "filter recrods (`-f 42`, `-ftask=me5`)") do |value|
-      column, value = Task::CliFilters.parse_column_value value
-      @scope = Task::CliFilters.apply scope, column, value
+    parser.on("-fATTRIBUTE=VALUE", String, "filter recrods (`-f 42`, `-ftask=me5`)") do |input|
+      attr, value = Task::Attributes.parse_input_pair input
+      value = Task::Attributes.process_value attr, value
+      @scope = Task.all.filter_by_attr_value attr, value
     end
   end
 

@@ -33,7 +33,7 @@ RSpec.describe 'CLI: edit', type: :cli do
     result = invoke! value
     expect(result).to eq({
       stdout: <<-DOC
-│ id  │ task      │ start        │ end          │ text            │
+│ id  │ task      │ start        │ end          │ message         │
 ├-----------------------------------------------------------------┤
 │ 101   t1          240511:01:30   240511:03:00   Wash the dishes |
 │ 101   ticket123   240511:01:30   240511:03:00   Wash the dishes |
