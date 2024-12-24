@@ -20,7 +20,14 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%#= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+    <% if Rails.env.development? %>
+      <script type="module" src="http://localhost:3031/@vite/client"></script>
+      <script type="module" src="http://localhost:3031/src/main.js"></script>
+    <% else %>
+      <%#= javascript_include_tag 'application', type: 'module', defer: true %>
+    <% end %>
   </head>
 
   <body>

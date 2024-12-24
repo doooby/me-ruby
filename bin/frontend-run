@@ -1,0 +1,11 @@
+#!/bin/bash
+
+run_in_tab() {
+    local cmd="$1"
+    gnome-terminal --tab -- bash -i -c "$cmd; history -s \"$cmd\"; exec bash"
+}
+
+# run_in_tab "env RUBY_DEBUG_OPEN=true bin/rails server -b 127.0.0.1 -p 3030"
+run_in_tab "bin/rails server -p 3030"
+# run_in_tab "yarn watch:css"
+run_in_tab "cd vendor/frontend; deno task dev"
