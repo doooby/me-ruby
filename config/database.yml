@@ -24,9 +24,8 @@ test:
 # Store production database in the storage/ directory, which by sqlite3
 # is mounted as a persistent Docker volume in config/deploy.yml.
 production:
-  primary:
-    <<: *sqlite3
-    database: /me/var/production.sqlite3
+  <<: *sqlite3
+  database: /me/var/production.sqlite3
 #   cache:
 #     <<: *sqlite3
 #     database: storage/production_cache.sqlite3
