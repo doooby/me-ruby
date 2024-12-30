@@ -17,6 +17,16 @@ set -x
 git clone git@github.com:doooby/me-ruby.git $root_path/src
 set +x
 
+echo "... setting production runner"
+set -x
+mkdir $root_path/bin
+cat << EOF > $root_path/bin/cli
+#!/usr/bin/env sh
+exec $root_path/src/bin/production_exec $root_path/src/bin/cli.rb "\$@"
+EOF
+chmod u+x $root_path/bin/cli
+set +x
+echo "TODO insert into ~/.bashrc : `alias me=/me/bin/cli`"
+
 echo "TODO copy rails master key"
 echo "TODO add database (either from backup or create new one)"
-echo "TODO install bash command alias for /me/src/bin/cli.rb"

@@ -3,7 +3,13 @@ a tool to track my hours for dev tasks
 
 ## PRODUCTION USE
 ```bash
+# TODO copy rails master key
+# TODO add database (either from backup or create new one)
+# TODO install bash command alias for /me/src/bin/cli.rb
+
+cd /me/src
 DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bin/production_exec bin/rails db:reset
+bin/production_exec bin/rails db:migrate
 ```
 
 ## CLI arguments
