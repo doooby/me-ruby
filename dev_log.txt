@@ -44,3 +44,4 @@ date | start | end | task | text
 241224 11:30 12:20 me8 vue experiments
 241224 12:45 13:45 me8 vue
 241224 17:00 18:00 me10 installation & create db scripts
+241230 15:15 me10
