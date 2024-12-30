@@ -1,6 +1,11 @@
 # ME
 a tool to track my hours for dev tasks
 
+## PRODUCTION USE
+```bash
+DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bin/production_exec bin/rails db:reset
+```
+
 ## CLI arguments
 ```
 me start
