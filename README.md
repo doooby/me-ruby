@@ -9,6 +9,7 @@ a tool to track my hours for dev tasks
 
 cd /me/src
 DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bin/production_exec bin/rails db:reset
+bin/production_exec bin/rails db:create db:schema:load
 bin/production_exec bin/rails db:migrate
 ```
 

@@ -22,7 +22,8 @@ set -x
 mkdir $root_path/bin
 cat << EOF > $root_path/bin/cli
 #!/usr/bin/env sh
-exec $root_path/src/bin/production_exec $root_path/src/bin/cli.rb "\$@"
+cd /me/src
+exec bin/production_exec bin/cli.rb "$@"
 EOF
 chmod u+x $root_path/bin/cli
 set +x

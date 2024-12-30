@@ -10,11 +10,9 @@ module Me::Cli
       get_log_io(:out).puts HELP_MESSAGE
       Me::Cli.exit! 0
     else
-      get_log_io(:out).puts <<-DOC
-#{"bad command".red}
-
-#{HELP_MESSAGE}
-      DOC
+      get_log_io(:out).puts "bad command".red
+      get_log_io(:out).puts ""
+      get_log_io(:out).puts HELP_MESSAGE
       Me::Cli.exit! 1
     end
 

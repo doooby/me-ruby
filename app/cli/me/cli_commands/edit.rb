@@ -12,7 +12,14 @@ class Me::CliCommands::Edit < Me::CommandBase
   end
 
   def parse! args
-    task_id = args.shift.presence
+    unless args[0] == "-h" || args[0] == "--help"
+      load args.shift.presence
+    end
+    @attributes = {}
+    _ = parser.parse args
+  end
+
+  def load task_id
     unless task_id
       log :out, <<-DOC
 #{"missing TASK_ID".red}
@@ -27,9 +34,6 @@ class Me::CliCommands::Edit < Me::CommandBase
       DOC
       Me::Cli.exit! 1
     end
-
-    @attributes = {}
-    _ = parser.parse args
   end
 
   def process
