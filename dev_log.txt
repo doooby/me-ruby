@@ -1,10 +1,9 @@
 # log # deprecated # TODO v1.0
-date | task | hours | text
-240921 me0 20 learning basics, linking sqlite3
-240922 me0 1 vision
 date | start | end | task | text
+240921 00:00 20:00 me0 zig learning basics, linking sqlite3
+240922 00:00 01:00 me0 vision
 241002 18:45 19:15 me1 revert to zig 0.13
-241003 14:00 14:45 i give up
+241003 14:00 14:45 me1 i give up
 241013 12:00 13:30 me3, me4
 241013 17:00 19:30 me4, me5
 241013 22:30 23:00 me6

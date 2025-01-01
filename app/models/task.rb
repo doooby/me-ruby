@@ -152,4 +152,59 @@ class Task < ApplicationRecord
       fields
     end
   end
+
+  module Import
+    def self.import lines
+      if lines.is_a? String
+        lines = lines
+          .split("\n")
+          .map(&:presence)
+          .compact
+      end
+
+      lines.each do |line|
+        record = Version_0_9.parse_line line
+        record.save!
+      end
+    end
+
+    module Version_0_9
+      def self.parse_line text
+        words = []
+        4.times do
+          word, text = unshift_word text
+          words.push word
+        end
+        date = words[0]
+        Task.new({
+          start_at: build_date(date, words[1]),
+          end_at: build_date(date, words[2]),
+          task: words[3],
+          text: text
+        })
+      end
+
+      def self.unshift_word text
+        text = text.strip
+        index = text.index " "
+        if index and rest = text[index..-1].strip.presence
+          word = text[0..index - 1]
+          [ word, rest ]
+        else
+          [ text, nil ]
+        end
+      end
+
+      def self.build_date date, time
+        Time.new(
+          2000 + date[0..1].to_i,
+          date[2..3].to_i,
+          date[4..5].to_i,
+          time[0..1].to_i,
+          time[3..4].to_i,
+          0
+        )
+      end
+    end
+  end
 end
