@@ -22,11 +22,10 @@ class Me::CliCommands::Start < Me::CommandBase
   def parse! args
     @task = Task.new
     @attributes = { "start" => Me::Cli.get_now }
-
-    _ = parser.parse args
+    parse_args! args
   end
 
-  def process
+  def run
     task_attributes = Task::Attributes.map_attrs_to_table_fields attributes
     task.assign_attributes task_attributes
     task.save!

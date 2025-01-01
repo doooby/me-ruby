@@ -1,10 +1,11 @@
 class Me::CliCommands::Edit < Me::CommandBase
-  attr_accessor :task, :attributes
+  attr_accessor :id, :task, :attributes
 
   def setup_parser
     parser.banner = "Usage: me edit TASK_ID [OPTIONS]".blue
 
     parser.on("-aATTRIBUTE=VALUE", String, "attribute to set") do |input|
+      load_now
       attr, value = Task::Attributes.parse_input_pair input
       value = Task::Attributes.process_value(attr, value, task:)
       attributes[attr] = value
@@ -12,31 +13,31 @@ class Me::CliCommands::Edit < Me::CommandBase
   end
 
   def parse! args
-    unless args[0] == "-h" || args[0] == "--help"
-      load args.shift.presence
-    end
+    @id = args.shift.presence unless args.first&.start_with? "-"
     @attributes = {}
-    _ = parser.parse args
+    parse_args! args
   end
 
-  def load task_id
-    unless task_id
+  def load_now
+    return if @task || @id.nil?
+
+    unless @id
       log :out, <<-DOC
 #{"missing TASK_ID".red}
       DOC
       Me::Cli.exit! 1
     end
 
-    @task = Task.find_by id: task_id
+    @task = Task.find_by id: @id
     unless task
       log :out, <<-DOC
-#{"no task with id #{task_id}".red}
+#{"no task with id #{@id}".red}
       DOC
       Me::Cli.exit! 1
     end
   end
 
-  def process
+  def run
     original_task = Task.find task.id
     task_attributes = Task::Attributes.map_attrs_to_table_fields attributes
     task.assign_attributes task_attributes

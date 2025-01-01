@@ -11,11 +11,11 @@ RSpec.configure do |config|
       { stdout:, stderr:, status: }
     end
 
-    def fake_cli! command_klass, command_args
+    def fake_cli! command, command_args
       Me::Cli.set_embeded_mode!
-      command = command_klass.new Me::Cli.create_opt_parser
-      command.parse! Shellwords.split(command_args)
-      command.process!
+      command.process! do |instance|
+        instance.parse! Shellwords.split(command_args)
+      end
       Me::Cli.exit! 0
     rescue Me::Cli::ExitedException => exception
       exit_status = exception.message[-1].to_i

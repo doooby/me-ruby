@@ -17,19 +17,8 @@ module Me::Cli
     end
 
     Me::Cli.freeze_now
-    command = command.new create_opt_parser
-    command.parse! args
-    command.process!
+    command.process!{ _1.parse! args }
     Me::Cli.exit! 0
-  end
-
-  def self.create_opt_parser
-    opt_parser = OptionParser.new
-    opt_parser.on_tail("-h", "--help", "Prints this help") do
-      get_log_io(:out).puts opt_parser
-      Me::Cli.exit! 0
-    end
-    opt_parser
   end
 
   def self.set_embeded_mode!

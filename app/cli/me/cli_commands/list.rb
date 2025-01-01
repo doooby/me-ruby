@@ -23,10 +23,10 @@ class Me::CliCommands::List < Me::CommandBase
   def parse! args
     @show_columns = Task::Print::TABLE_COLUMNS
     @scope = Task.all
-    _ = parser.parse args
+    parse_args! args
   end
 
-  def process
+  def run
     records = scope.order(id: :desc).limit(10).to_a
     return if records.length.zero?
 

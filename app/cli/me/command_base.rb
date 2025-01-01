@@ -6,8 +6,20 @@ class Me::CommandBase
     setup_parser
   end
 
+  def self.process!
+    opt_parser = OptionParser.new
+    opt_parser.on_tail("-h", "--help", "Prints this help") do
+      Me::Cli.get_log_io(:out).puts opt_parser
+      Me::Cli.exit! 0
+    end
+    instance = new opt_parser
+    yield instance
+    instance.process!
+  end
+
   def process!
-    process
+    try :load_now
+    run
   rescue => error
     log :out, <<-DOC
 #{"fail".red}
@@ -15,6 +27,10 @@ class Me::CommandBase
     log :err, error.message
     log :err, error.backtrace.join("\n")
     Me::Cli.exit! 1
+  end
+
+  def parse_args! args
+    parser.parse args
   end
 
   def log output, message
