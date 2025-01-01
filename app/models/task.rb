@@ -8,12 +8,12 @@ class Task < ApplicationRecord
           when "i", "id" then record.id
           when "t", "task" then record.task.to_s
           when "m", "message" then record.text.to_s
-          when "s", "start" then Me::Terminal.format_time record.start_at
-          when "e", "end" then Me::Terminal.format_time record.end_at
+          when "s", "start" then Me::Ti::Terminal.format_time record.start_at
+          when "e", "end" then Me::Ti::Terminal.format_time record.end_at
           end
         end
       end
-      Me::Terminal::DataTable.new rows, columns
+      Me::Ti::Terminal::DataTable.new rows, columns
     end
   end
 

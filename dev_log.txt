@@ -1,20 +1,4 @@
-# tasks
-me0  [-] (zig) init
-me1  [-] (zig) use zig-clap to parse args
-me2  [-] (zig) sqlite integration
-me3  [x] move to ruby
-me4  [x] opt parsing, start cli command, rspecs
-me5  [x] cli me start
-me6  [ ] cli me ls
-me7  [x] cli me edit
-me8  [ ] prontend setup
-me9  [ ] fe table
-me10 [ ] production setup
-
-# ideas
-- when create & edit, color the output green / red
-
-# log
+# log # deprecated # TODO v1.0
 date | task | hours | text
 240921 me0 20 learning basics, linking sqlite3
 240922 me0 1 vision
@@ -44,4 +28,9 @@ date | start | end | task | text
 241224 11:30 12:20 me8 vue experiments
 241224 12:45 13:45 me8 vue
 241224 17:00 18:00 me10 installation & create db scripts
-3    me10   241230:15:15   241230:18:00   prod setup
+
+# log # tasks # deprecated # TODO v1.0
+# id # task # start        # end          # message
+# 3    me10   241230:15:15   241230:18:00   prod setup
+# 5    me13   250101:15:30   250101:16:15   revision
+# 6    me13   250101:16:17         mes_alias

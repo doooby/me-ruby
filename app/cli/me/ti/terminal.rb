@@ -1,4 +1,4 @@
-module Me::Terminal
+module Me::Ti::Terminal
   def self.format_time time
     return "" unless time
     time.localtime.strftime "%y%m%d:%H:%M"
@@ -60,7 +60,7 @@ module Me::Terminal
         header = +"│ "
         columns.each_with_index do |text, index|
           header << " │ " unless index.zero?
-          Me::Terminal.push_cell_into! header, text, column_sizes[index]
+          Me::Ti::Terminal.push_cell_into! header, text, column_sizes[index]
         end
         header << " │"
         yield header
@@ -77,7 +77,7 @@ module Me::Terminal
         separator = minimized ? " " : "   "
         columns.length.times do |index|
           text << separator unless index.zero?
-          Me::Terminal.push_cell_into! text, row[index], column_sizes[index]
+          Me::Ti::Terminal.push_cell_into! text, row[index], column_sizes[index]
         end
         text << " |" unless minimized
         yield text, row_index

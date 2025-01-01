@@ -1,7 +1,8 @@
 # ME
 a tool to track my hours for dev tasks
 
-## PRODUCTION USE
+## USE
+### TODO v1.0 docs
 ```bash
 # TODO copy rails master key
 # TODO add database (either from backup or create new one)
@@ -11,9 +12,25 @@ cd /me/src
 DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bin/production_exec bin/rails db:reset
 bin/production_exec bin/rails db:create db:schema:load
 bin/production_exec bin/rails db:migrate
+
+me ls
+me ls -v
+me lsv -fid=$task_id
+
+mes me13 revision
+me start -atask=me13 -amessage=revision -astart=250101:1200
+me task -tme13 -mrevision -astart=:1200
+
+mee 13 # TODO v1.0 message: pass new attributes
+me edit 13 -mrevision -astart=:1200
+me edit 13 -tme13 -e_:2000 # TODO v1.0
+me edit 13 -e:-0010 # TODO v1.0
+me edit 13 -e_:+10 # TODO v1.0
+
 ```
 
-## CLI arguments
+## CLI arguments ( v0.9 deprecated )
+#### TODO v1.0 cleanup
 ```
 me start
 me t
