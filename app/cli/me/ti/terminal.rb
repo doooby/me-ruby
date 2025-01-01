@@ -1,7 +1,26 @@
 module Me::Ti::Terminal
-  def self.format_time time
+  class Settings
+    attr_accessor :time_format
+    def initialize
+      set_humanized_time_format
+    end
+    def set_humanized_time_format
+      @time_format = "%-d/%-m/%y %H:%M"
+    end
+    def set_strict_time_format
+      @time_format = "%y%m%d:%H:%M"
+    end
+  end
+
+  def self.string_length string
+    string
+      .gsub(/(\e\[[\d;]*m)/, "")
+      .length
+  end
+
+  def self.format_time time, settings
     return "" unless time
-    time.localtime.strftime "%y%m%d:%H:%M"
+    time.localtime.strftime settings.time_format
   end
 
   def self.parse_time text, relative_date: nil
@@ -51,7 +70,9 @@ module Me::Ti::Terminal
 
     def each_text_row
       column_sizes = columns.map.with_index do |column, index|
-        items_max = rows.map{ _1[index].length }.max
+        items_max = rows
+          .map{ Me::Ti::Terminal.string_length _1[index] }
+          .max
         [ items_max, minimized ? 0 : column.length ].max
       end
 

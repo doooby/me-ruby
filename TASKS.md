@@ -14,8 +14,8 @@ me13 [ ] revision for 0.9
   - `mes` = to start new task
   - `mee` = to edit a task by id (keep -h)
   - x make -h & --help not to execute data load code
-  - print time # 31/12/24 9:00
-  - print end time # -> 31/12/24 12:00
+  - x print time # 31/12/24 9:00
+  - x print end time # -> 31/12/24 12:00
   me14 [ ] v1.0
   - import production data
   - ---------

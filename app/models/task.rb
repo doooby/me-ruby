@@ -1,15 +1,22 @@
 class Task < ApplicationRecord
   module Print
     TABLE_COLUMNS = %w[ id task start end message ]
-    def self.tasks_to_table records, columns = TABLE_COLUMNS
+    def self.tasks_to_table records, columns: TABLE_COLUMNS, settings: Me::Ti::Terminal::Settings.new
       rows = records.map do |record|
         columns.map do |column|
           case column
           when "i", "id" then record.id
           when "t", "task" then record.task.to_s
           when "m", "message" then record.text.to_s
-          when "s", "start" then Me::Ti::Terminal.format_time record.start_at
-          when "e", "end" then Me::Ti::Terminal.format_time record.end_at
+          when "s", "start" then Me::Ti::Terminal.format_time record.start_at, settings
+          when "e", "end" then
+            end_at = record.end_at
+            value = if end_at
+              Me::Ti::Terminal.format_time end_at, settings
+            else
+              "in progress ".yellow
+            end
+            "-> #{value}"
           end
         end
       end

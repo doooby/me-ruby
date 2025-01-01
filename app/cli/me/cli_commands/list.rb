@@ -30,7 +30,7 @@ class Me::CliCommands::List < Me::CommandBase
     records = scope.order(id: :desc).limit(10).to_a
     return if records.length.zero?
 
-    table = Task::Print.tasks_to_table records, show_columns
+    table = Task::Print.tasks_to_table records, columns: show_columns
     table.minimized = true if minimize_output
     table.each_text_row{ log :out, _1.strip }
   end
