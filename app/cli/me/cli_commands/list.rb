@@ -1,5 +1,5 @@
 class Me::CliCommands::List < Me::CommandBase
-  attr_accessor :scope, :show_columns, :minimize_output
+  attr_reader :scope, :show_columns, :minimize_output
 
   def setup_parser
     parser.banner = "Usage: me list [OPTIONS]".blue
@@ -18,6 +18,20 @@ class Me::CliCommands::List < Me::CommandBase
       value = Task::Attributes.process_value attr, value
       @scope = Task.all.filter_by_attr_value attr, value
     end
+
+    parser.on("--per VALUE", String, "set pagination records per page") do |value|
+      if value == "all"
+        @pagination = {
+          **pagination,
+          per: nil
+        }
+      elsif per_page = value.match(/^(\d*)$/)
+        @pagination = {
+          **pagination,
+          per: per_page[1].to_i
+        }
+      end
+    end
   end
 
   def parse! args
@@ -26,8 +40,21 @@ class Me::CliCommands::List < Me::CommandBase
     parse_args! args
   end
 
+  def pagination
+    @pagination ||= {
+      per: 10
+    }
+  end
+
   def run
-    records = scope.order(id: :desc).limit(10).to_a
+    @scope = scope.order(id: :desc)
+
+    pagination[:per] = pagination[:per] || 9999
+    pagination[:per] = 100 if pagination[:per] > 100
+    @scope = scope.limit pagination[:per]
+    puts "pagition=#{pagination}" # TODO v1.0
+
+    records = scope.to_a
     return if records.length.zero?
 
     table = Task::Print.tasks_to_table records, columns: show_columns

@@ -95,4 +95,8 @@ RSpec.describe 'CLI: list', type: :cli do
       DOC
     })
   end
+
+  with_value '--per all' do |value|
+    raise 'niy'
+  end
 end
