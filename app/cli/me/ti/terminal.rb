@@ -5,11 +5,7 @@ module Me::Ti::Terminal
       set_humanized_time_format
     end
     def set_humanized_time_format
-      @time_format = Proc.new do |time|
-        day = time.day.to_s.rjust 2, " "
-        month = time.month.to_s.rjust 2, " "
-        "#{day}/#{month}/%y %H:%M"
-      end
+      @time_format =  ->{ MeHelper.build_time_format _1 }
     end
     def set_strict_time_format
       @time_format = "%y%m%d:%H:%M"
@@ -24,9 +20,10 @@ module Me::Ti::Terminal
 
   def self.format_time time, settings
     return "" unless time
+    time = time.localtime
     time_format = settings.time_format
     time_format = time_format.call(time) if time_format.is_a? Proc
-    time.localtime.strftime time_format
+    Me.format_time time_format
   end
 
   class DataTable

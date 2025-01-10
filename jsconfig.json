@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".", // Root of the project
+    "paths": {
+      "%root/*": ["vendor/frontend/*"]
+    }
+  }
+}

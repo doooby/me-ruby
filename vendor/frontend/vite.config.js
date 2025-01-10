@@ -8,4 +8,9 @@ export default defineConfig({
     hmr: true,
     port: 3031,
   },
+  resolve: {
+    alias: {
+        '%root/': '/',
+    },
+},
 })
