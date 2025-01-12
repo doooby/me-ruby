@@ -1,6 +1,6 @@
 # tasks
 me6  [ ] cli me ls
-me8  [ ] frontend setup
+me8  [x] frontend setup
 me9  [ ] fe table
 me11 [ ] db backups
 me12 [ ] delete task
