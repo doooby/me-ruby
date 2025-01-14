@@ -1,4 +1,38 @@
 class Task < ApplicationRecord
+  def self.filter_by_attr_value attr, value
+    condition = case attr
+    when "id", "task"
+      Task.arel_table[attr].eq value
+    when "message"
+      Task.arel_table["text"].matches "%#{value}%"
+    else
+      raise Attributes::NotSpecifiedError, "cannot filter by #{attr}"
+    end
+    where condition
+  end
+
+  module Recordable
+    def self.to_data record
+      {
+        id: record.id,
+        task: record.task,
+        start_at: record.start_at&.to_s,
+        end_at: record.end_at&.to_s,
+        message: record.text
+      }
+    end
+
+    def aaa record
+      {
+        id: record.id,
+        task: record.task,
+        start_at: record.start_at&.to_s,
+        end_at: record.end_at&.to_s,
+        message: record.text
+      }
+    end
+  end
+
   module Print
     TABLE_COLUMNS = %w[ id task start end message ]
     def self.tasks_to_table records, columns: TABLE_COLUMNS, settings: Me::Ti::Terminal::Settings.new
@@ -22,18 +56,6 @@ class Task < ApplicationRecord
       end
       Me::Ti::Terminal::DataTable.new rows, columns
     end
-  end
-
-  def self.filter_by_attr_value attr, value
-    condition = case attr
-    when "id", "task"
-      Task.arel_table[attr].eq value
-    when "message"
-      Task.arel_table["text"].matches "%#{value}%"
-    else
-      raise Attributes::NotSpecifiedError, "cannot filter by #{attr}"
-    end
-    where condition
   end
 
   module Attributes

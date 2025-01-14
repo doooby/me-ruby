@@ -1,5 +1,6 @@
 import { reactive } from 'vue'
 
+
 /**
  * @module MeToolkit
  *
@@ -14,6 +15,7 @@ import { reactive } from 'vue'
  * @property {Map.<string,MeToolkit.DataTableColumn>} columns.index
  * @property {Array<number>} columns.sizes
  * @property {Array<string>} columns.cssStyles
+ * @property {Array<Object>} records
  */
 
 /**
@@ -25,31 +27,33 @@ export function castDataTableContext (context) {
 }
 
 /**
- * @param {Array<MeToolkit.DataTableColumn>} columns
- * @returns {MeToolkit.DataTableColumn}
+ * @param {Array<MeToolkit.DataTableColumn>} initialColumns
+ * @param {Array<Object>} records
+ * @returns {MeToolkit.DataTableContext}
  */
-export function useDataTable (columns) {
-  columns.forEach(item => Object.freeze(item))
-  const columnsList = new Set(columns)
-  const sizes = new Array(columns.length)
-  const data = reactive({
-    columns: {
-      list: columnsList,
-      index: columns.reduce(
-        (map, column) => {
-          map.set(column.id, column)
-          return map
-        },
-        new Map(),
-      ),
-      sizes,
-      cssStyles: Array.from(sizes, getColumnsSizeCssStyle),
-    },
+export function useDataTable (initialColumns, records) {
+  initialColumns.forEach(item => Object.freeze(item))
 
-
+  const columnsList = new Set(initialColumns)
+  const sizes = new Array(initialColumns.length)
+  const columns = reactive({
+    list: columnsList,
+    index: initialColumns.reduce(
+      (map, column) => {
+        map.set(column.id, column)
+        return map
+      },
+      new Map(),
+    ),
+    sizes,
+    cssStyles: Array.from(sizes, getColumnsSizeCssStyle),
   })
 
-  return data
+  const context = reactive({
+    columns,
+    records,
+  })
+  return context
 }
 
 /**
@@ -58,5 +62,5 @@ export function useDataTable (columns) {
  */
 function getColumnsSizeCssStyle (size) {
   if (isNaN(size)) size = 150
-  return `width: #{size} px;`
+  return `width: ${size}px;`
 }
