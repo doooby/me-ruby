@@ -1,6 +1,5 @@
 import { reactive } from 'vue'
 
-
 /**
  * @module MeToolkit
  *
@@ -8,52 +7,37 @@ import { reactive } from 'vue'
  * @property {string} id
  * @property {string} caption
  *
- * @typedef {Object} MeToolkit.DataTableContext
- * @property {any} payloadMapper
- * @property {Object} columns
- * @property {Set<MeToolkit.DataTableColumn>} columns.list
- * @property {Map.<string,MeToolkit.DataTableColumn>} columns.index
- * @property {Array<number>} columns.sizes
- * @property {Array<string>} columns.cssStyles
- * @property {Array<Object>} records
+ * @typedef {Object} MeToolkit.DataTableColumns
+ * @property {Set<MeToolkit.DataTableColumn>} list
+ * @property {Map<string,MeToolkit.DataTableColumn>} index
+ * @property {Array<number>} sizes
+ * @property {Array<string>} cssStyles
  */
 
 /**
- * @param {any} context
- * @returns {MeToolkit.DataTableContext}
+ * @param {Array<MeToolkit.DataTableColumn>} columns
+ * @returns {MeToolkit.DataTableColumns}
  */
-export function castDataTableContext (context) {
-  return context
-}
-
-/**
- * @param {Array<MeToolkit.DataTableColumn>} initialColumns
- * @param {Array<Object>} records
- * @returns {MeToolkit.DataTableContext}
- */
-export function useDataTable (initialColumns, records) {
-  initialColumns.forEach(item => Object.freeze(item))
-
-  const columnsList = new Set(initialColumns)
-  const sizes = new Array(initialColumns.length)
-  const columns = reactive({
-    list: columnsList,
-    index: initialColumns.reduce(
-      (map, column) => {
-        map.set(column.id, column)
-        return map
-      },
-      new Map(),
-    ),
+export function useDataTableColumns (...columns) {
+  const list = new Set(columns)
+  const index = columns.reduce(
+    (map, column) => {
+      map.set(column.id, column)
+      return map
+    },
+    new Map(),
+  )
+  const sizes = new Array(columns.length)
+  return reactive({
+    list,
+    index,
     sizes,
     cssStyles: Array.from(sizes, getColumnsSizeCssStyle),
+    setColumnSize (index, size) {
+      this.sizes[index] = size
+      this.cssStyles[index] = getColumnsSizeCssStyle(size)
+    }
   })
-
-  const context = reactive({
-    columns,
-    records,
-  })
-  return context
 }
 
 /**

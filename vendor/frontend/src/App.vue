@@ -1,12 +1,9 @@
 <script setup>
-import { ref } from 'vue'
 import * as app from '%root/src/app'
 import rdb from '%root/vendor/recordable'
 import components from '%root/src/components'
 import { parseISO } from "date-fns";
 const ui = components.toolkit
-
-const tasks = ref()
 
 const aa = app.DataReader.useRead({
   payloadMapper: rdb.list(app.tasks.initializeTask),
@@ -15,7 +12,7 @@ aa.read((value) => {
   console.log('done', value)
 })
 
-const initialDataSet = [
+const records = [
   {id:3, task:'me10', start_at:parseISO('2024-12-30 02:15:00'), end_at:parseISO('2024-12-30 05:00:00'), message:'prod setup'},
   {id:5, task:'me13', start_at:parseISO('2025-01-01 02:30:00'), end_at:parseISO('2025-01-01 03:15:00'), message:'revision'},
   {id:6, task:'me13', start_at:parseISO('2025-01-01 03:17:21'), end_at:parseISO('2025-01-01 05:58:00'), message:'revision'},
@@ -30,16 +27,12 @@ const initialDataSet = [
   {id:16, task:'me9', start_at:parseISO('2025-01-14 03:45:07'), end_at:null, message:null},
 ]
 
-
-const tableContext = components.toolkit.helpers.useDataTable(
-  [
+const columns = components.toolkit.helpers.useDataTableColumns(
     { id: 'id', caption: 'id' },
     { id: 'task', caption: 'task' },
     { id: 'start', caption: 'start at' },
     { id: 'end', caption: 'end at' },
     { id: 'message', caption: 'message' },
-  ],
-  initialDataSet,
 )
 
 // const dataReader = new app.DataReader({
@@ -57,7 +50,10 @@ const tableContext = components.toolkit.helpers.useDataTable(
 </script>
 
 <template>
-  <ui.DataTable :context="tableContext">
+  <ui.DataTable
+    :columns="columns"
+    :records="records"
+  >
     <template #start="{ record }">
       {{ components.format.time(record.start_at) }}
     </template>

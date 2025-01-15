@@ -1,27 +1,25 @@
 <script setup>
 import { defineProps } from 'vue'
-import components from '%root/src/components'
 
 const props = defineProps({
-  context: Object,
+  columns: Object,
+  records: Array,
 })
-
-const context = components.toolkit.helpers.castDataTableContext(props.context)
 </script>
 
 <template>
   <table class="table table-hover">
     <colgroup>
       <col
-          v-for="(column, index) in context.columns.list"
+          v-for="(column, index) in columns.list"
           :key="column.id"
-          :style="context.columns.cssStyles[index]"
+          :style="columns.cssStyles[index]"
         >
     </colgroup>
     <thead>
       <tr>
         <th
-          v-for="column in context.columns.list"
+          v-for="column in columns.list"
           :key="column.id"
         >
           <div>
@@ -30,20 +28,19 @@ const context = components.toolkit.helpers.castDataTableContext(props.context)
         </th>
       </tr>
     </thead>
-    <tbody v-if="context.records?.length">
+    <tbody v-if="records?.length">
 
       <tr
-        v-for="(record, record_index) in context.records"
+        v-for="(record, record_index) in records"
         :key="record_index"
       >
         <td
-          v-for="(column, column_index) in context.columns.list"
+          v-for="(column, column_index) in columns.list"
           :key="column_index"
         >
           <slot v-if="$slots[column.id]"
             :name="column.id"
             :record="record"
-            :context="context"
           />
           <div v-else>
             {{ record[column.id] }}
