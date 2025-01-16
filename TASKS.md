@@ -4,6 +4,8 @@ me8  [x] frontend setup
 me9  [ ] fe table
 me11 [ ] db backups
 me12 [ ] delete task
+me16 [ ] end task
+me17 [ ] summary page
 me13 [ ] revision for v0.9, import data
 [ ] me14 v1.0
   - ---------

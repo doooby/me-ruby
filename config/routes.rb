@@ -13,4 +13,9 @@ Rails.application.routes.draw do
   root "application#index"
 
   resources :tasks
+  get "summary" => "tasks#summary"
+
+  scope "fe-api-v1", constraints: { format: :json } do
+    post "summary" => "tasks#summary"
+  end
 end

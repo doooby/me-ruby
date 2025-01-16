@@ -16,18 +16,8 @@ class Task < ApplicationRecord
       {
         id: record.id,
         task: record.task,
-        start_at: record.start_at&.to_s,
-        end_at: record.end_at&.to_s,
-        message: record.text
-      }
-    end
-
-    def aaa record
-      {
-        id: record.id,
-        task: record.task,
-        start_at: record.start_at&.to_s,
-        end_at: record.end_at&.to_s,
+        start_at: record.start_at,
+        end_at: record.end_at,
         message: record.text
       }
     end

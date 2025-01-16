@@ -1,4 +1,4 @@
 import { createApp } from 'vue'
-import App from './App.vue'
+import Page from '%root/components/Page.vue'
 
-createApp(App).mount('#app')
+createApp(Page).mount('#me-fronted-app-root')
