@@ -1,8 +1,7 @@
 class TasksController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  def index
-  end
+  layout "fe_page"
 
   def summary
     @tasks = Task.all

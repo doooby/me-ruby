@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <table class="table table-hover">
+  <table class="table fe--table">
     <colgroup>
       <col
           v-for="(column, index) in columns.list"
@@ -21,6 +21,7 @@ defineProps({
         <th
           v-for="column in columns.list"
           :key="column.id"
+          scope="col"
         >
           <div>
             {{ column.caption }}

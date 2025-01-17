@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Me</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%= stylesheet_link_tag :fe_page, "data-turbo-track": "reload" %>
+
+    <% if Rails.env.development? %>
+      <script type="module" src="http://localhost:3031/@vite/client"></script>
+      <script type="module" src="http://localhost:3031/src/main.js"></script>
+    <% else %>
+      <%#= javascript_include_tag '/assets/build/fe_build.js', type: 'module', defer: true %>
+    <% end %>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>
