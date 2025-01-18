@@ -19,7 +19,7 @@ class Me::CliCommands::Edit < Me::CommandBase
   end
 
   def load_now
-    return if @task || @id.nil?
+    return if @task
 
     unless @id
       log :out, <<-DOC

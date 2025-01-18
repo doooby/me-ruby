@@ -23,7 +23,7 @@ module Me::Ti::Terminal
     time = time.localtime
     time_format = settings.time_format
     time_format = time_format.call(time) if time_format.is_a? Proc
-    Me.format_time time_format
+    Me.format_time time, time_format
   end
 
   class DataTable
