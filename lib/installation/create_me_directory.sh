@@ -21,7 +21,7 @@ echo "... setting production runner"
 set -x
 mkdir $root_path/bin
 cat << EOF > $root_path/bin/cli
-#!/usr/bin/env sh
+#!/usr/bin/env sh -e
 cd /me/src
 exec bin/production_exec bin/cli.rb "$@"
 EOF
