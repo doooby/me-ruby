@@ -22,6 +22,8 @@ git@github.com:doooby/me-ruby.git
 readonly remote_name="dev"
 readonly remote_url=""
 readonly remote_release_branch="main"
+
+sh bin/update_release_v0.9.sh
 ```
 
 
