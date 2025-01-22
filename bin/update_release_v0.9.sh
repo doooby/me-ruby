@@ -1,4 +1,4 @@
-#!/usr/bin/env sh -e
+#!/usr/bin/env -S sh -e
 
 readonly remote_name="release_v0.9"
 readonly remote_url="git@github.com:doooby/me-ruby.git"
@@ -11,7 +11,7 @@ log_error () {
 check_is_remote_present () {
   git remote -v | grep "$remote_name" || (
     git remote add "$remote_name" "$remote_url"
-    git remote set-url --push origin http://localhost/dummy_path.no
+    git remote set-url --push "$remote_name" http://localhost/dummy_path.no
   )
   return 0
 }

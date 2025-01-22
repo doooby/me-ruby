@@ -1,6 +1,27 @@
 # ME
 a tool to track my hours for dev tasks
 
+see USE section to see current dev
+
+## Docs 0.9
+backup DB:
+```bash
+bck_date="250122"
+cp /me/var/production.sqlite3 /me/var/production.sqlite3.$bck_date.bck
+```
+
+check & update code
+```bash
+cd /me/src
+git status
+# should be on: dev/main
+git fetch dev
+git merge dev/main
+git@github.com:doooby/me-ruby.git
+```
+
+
+
 ## USE
 ### TODO v1.0 docs
 ```bash

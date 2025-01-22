@@ -1,4 +1,4 @@
-#!/usr/bin/env sh -e
+#!/usr/bin/env -S sh -e
 
 export RAILS_ENV=production
 exec "$@"
