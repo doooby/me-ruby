@@ -18,6 +18,10 @@ git status
 git fetch dev
 git merge dev/main
 git@github.com:doooby/me-ruby.git
+
+readonly remote_name="dev"
+readonly remote_url=""
+readonly remote_release_branch="main"
 ```
 
 
