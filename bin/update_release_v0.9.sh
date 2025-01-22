@@ -20,9 +20,10 @@ check_is_remote_present () {
 
 check_is_remote_valid () {
   echo "TODO me14 ignoring check_is_remote_valid"
-  # readonly expected_text="$remote_name $remote_url (fetch)"
-  # readonly text2="`echo "$expected_text" | tr -d ' '`"
-  # echo "$text2"
+  readonly remote_description="$remote_name $remote_url (fetch)"
+  echo "$remote_description"
+  readonly text2="`echo "$expected_text" | tr -d ' '`"
+  echo "$text2"
   # git remote -v | grep "$text2" || (
   #   log_error "invalid remote. expected: ${expected_text}"
   #   exit 1
