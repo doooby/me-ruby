@@ -4,6 +4,7 @@ a tool to track my hours for dev tasks
 see USE section to see current dev
 
 ## Docs 0.9
+TODO v0.9
 backup DB:
 ```bash
 bck_date="250122"
@@ -18,15 +19,13 @@ git status
 git fetch dev
 git merge dev/main
 git@github.com:doooby/me-ruby.git
-
-readonly remote_name="dev"
-readonly remote_url=""
-readonly remote_release_branch="main"
-
-sh bin/update_release_v0.9.sh
 ```
 
-
+build frontend
+```bash
+bin/production_exec (cd vendor/frontend && npm run build)
+bin/production bin/rails assets:precompile
+```
 
 ## USE
 ### TODO v1.0 docs

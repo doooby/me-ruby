@@ -10,13 +10,13 @@
 
     <%= yield :head %>
 
-    <%= stylesheet_link_tag :fe_page, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag :fe_page %>
 
     <% if Rails.env.development? %>
       <script type="module" src="http://localhost:3031/@vite/client"></script>
       <script type="module" src="http://localhost:3031/src/main.js"></script>
     <% else %>
-      <%#= javascript_include_tag '/assets/build/fe_build.js', type: 'module', defer: true %>
+      <%= javascript_include_tag 'app.js', type: 'module', defer: true %>
     <% end %>
   </head>
 

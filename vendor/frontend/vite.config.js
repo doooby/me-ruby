@@ -17,4 +17,13 @@ export default defineConfig({
         '%root/': '/',
     },
   },
+  build: {
+    outDir: '../../app/assets/builds',
+    rollupOptions: {
+      input: './src/main.js',
+      output: {
+        entryFileNames: 'app.js',
+      },
+    },
+  },
 })
