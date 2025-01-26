@@ -1,6 +1,6 @@
 import {ref} from 'vue'
 import rdb from '%root/vendor/recordable'
-import app from 'app'
+import * as app from '%root/src/app'
 
 export default class DataReader extends rdb.FetchJsonRecordReader {
   stateRef = null
