@@ -50,7 +50,7 @@ namespace :production do
 
   def shell_call! command
     puts command.blue
-    yield
+    system command
     raise ShellCallException unless $?.exitstatus.zero?
   rescue ShellCallException
     puts "shell call exception".red

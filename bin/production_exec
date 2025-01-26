@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
 export RAILS_ENV=production
+export ME_SERVER_URL=http://localhost:3000
 exec "$@"

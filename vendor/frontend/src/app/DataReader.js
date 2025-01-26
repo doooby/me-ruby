@@ -1,11 +1,12 @@
 import {ref} from 'vue'
 import rdb from '%root/vendor/recordable'
+import app from 'app'
 
 export default class DataReader extends rdb.FetchJsonRecordReader {
   stateRef = null
 
   constructor (options) {
-    options.baseUrlPath = 'http://localhost:3030/fe-api-v1/'
+    options.baseUrlPath = `${app.env.serverUrl}/fe-api-v1/`
     super(options)
     this.stateRef = ref(Object.freeze(this.state))
     this.onChange = (newState) => {

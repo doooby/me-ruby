@@ -17,6 +17,11 @@ export default defineConfig({
         '%root/': '/',
     },
   },
+  define: {
+    'import.meta.env.ME_SERVER_URL': JSON.stringify(
+      process.env.ME_SERVER_URL || 'http://localhost:3030'
+    ),
+  },
   build: {
     outDir: '../../app/assets/builds',
     rollupOptions: {
