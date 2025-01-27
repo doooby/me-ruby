@@ -1,5 +1,3 @@
-# TODO me13
-
 # log
 date | start | end | task | text
 240921 00:00 20:00 me0 zig learning basics, linking sqlite3

@@ -52,7 +52,7 @@ class Me::CliCommands::List < Me::CommandBase
     pagination[:per] = pagination[:per] || 9999
     pagination[:per] = 100 if pagination[:per] > 100
     @scope = scope.limit pagination[:per]
-    puts "pagition=#{pagination}" # TODO v1.0
+    puts "pagition=#{pagination}"
 
     records = scope.to_a
     return if records.length.zero?

@@ -1,44 +1,70 @@
 # ME
 a tool to track my hours for dev tasks
 
-see USE section to see current dev
+## USE
+Currenty, I just git clone this to `/me/src` and use it "globaly" from there.
 
-## Docs 0.9
-TODO v0.9
-backup DB:
+Cli:
 ```bash
-bck_date="250122"
-cp /me/var/production.sqlite3 /me/var/production.sqlite3.$bck_date.bck
+mes -t123 -m"i have a goal"
+me ls --per 1
+mee 42 -as=:1000 -ae=:
+```
+for details skip [here](#cli-commands).
+
+There is also a web:
+```bash
+(cd /me/src && bin/production_exec bin/rails s)
 ```
 
-check & update code
+### current production setupj
+#### install:
+read and execute [https://raw.githubusercontent.com/doooby/me-ruby/refs/heads/main/lib/installation/create_me_directory.sh](this) script to setup "/me" directory structure. Find appropriate version, if you don't want main branch.
 ```bash
 cd /me/src
-git status
-# should be on: dev/main
-git fetch dev
-git merge dev/main
-git@github.com:doooby/me-ruby.git
+bin/production_exec bin/rails db:create db:schema:load
+bin/production_exec bin/rails production:build
+
+# setup shell aliases
+# - me='/me/bin/cli'
+# - mes='/me/bin/cli start'
+# - mee='/me/bin/cli edit'
+# - mei='/me/bin/cli interactive'
+# - mew='(cd /me/src && bin/production_exec bin/rails s)'
+
+# copy rails master key
 ```
 
-build frontend
+#### update code
 ```bash
-bin/production_exec (cd vendor/frontend && npm run build)
-bin/production bin/rails assets:precompile
+cd /me/src
+git pull
+bundle install
+bin/production_exec bash lib/installation/create_database.sh
+bin/production_exec bin/rails production:build
 ```
 
-## USE
-### TODO v1.0 docs
+#### DB manipulations
+```bash
+# backup
+bck_date="250122"
+cp /me/var/production.sqlite3 /me/var/production.sqlite3.$bck_date.bck
+# restore
+cp /tmp/me-db-path /me/var/production.sqlite3
+```
+
+## Cli Commands {#cli-commands}
+```bash
+# TODO
+```
+
+
+## TODO docs
 ```bash
 # TODO rename Me::CliCommands::* => Me::Command::*, Me::CommandBase => Me::Command
 # TODO copy rails master key
 # TODO add database (either from backup or create new one)
 # TODO install bash command alias for /me/src/bin/cli.rb
-# aliases:
-# - me='/me/bin/cli'
-# - mes='/me/bin/cli start'
-# - mee='/me/bin/cli edit'
-# - mei='/me/bin/cli interactive'
 
 cd /me/src
 DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bin/production_exec bin/rails db:reset
@@ -59,11 +85,8 @@ me edit 13 -tme13 -e_:2000 # TODO v1.0
 me edit 13 -e:-0010 # TODO v1.0
 me edit 13 -e_:+10 # TODO v1.0
 
-```
+# ------------------
 
-## CLI arguments ( v0.9 deprecated )
-#### TODO v1.0 cleanup
-```
 me start
 me t
 me t -at=t123 -am="ahoj karel"

@@ -22,11 +22,14 @@ set -x
 mkdir $root_path/bin
 cat << EOF > $root_path/bin/cli
 #!/usr/bin/env sh
-cd /me/src && exec bin/production_exec bin/cli.rb "$@"
+cd $root_path && exec bin/production_exec bin/cli.rb "$@"
 EOF
 chmod u+x $root_path/bin/cli
 set +x
-echo "TODO insert into ~/.bashrc : `alias me=/me/bin/cli`"
 
-echo "TODO copy rails master key"
-echo "TODO add database (either from backup or create new one)"
+echo "... installing dependencies"
+cd $root_path
+bundle config set without development test
+bundle install
+
+echo "DONE"

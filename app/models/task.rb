@@ -6,7 +6,6 @@ class Task < ApplicationRecord
     write_attribute :tasks, value&.try(:split, ",")
   end
 
-  # TODO v1.0
   def tasks= value
     value = nil unless value.is_a? Array
     value = value.presence&.map!{ _1.blank? ? nil : _1.to_s }

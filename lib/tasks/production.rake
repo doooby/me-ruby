@@ -1,4 +1,4 @@
-# TODO me14
+# TODO
 # a task to spin up production server and opens a browser
 # bin/production_exec bin/rails s -p
 # or just print the URL before startup

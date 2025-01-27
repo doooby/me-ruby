@@ -1,25 +1,29 @@
 # tasks
 [ ] me6 cli me ls
-[x] me8 frontend setup
-[x] me9 fe table
-[ ] me11 db backups
-[x] me12 delete task
-[x] me13 revision for v0.9, import data
-[ ] me14 finalize v0.9
-  - production scripting
+  - pagination
+[ ] me11 db backups scripting
+[x] me14 finalize v0.9
+  x production scripting
   x update rails to v8
-  - cleanup TODOs
-[ ] me15 - TODO v1.0 & release
+  x cleanup TODOs
+[ ] me15 release v1.0
+  - rake task to create empty DB (see lib/installation/create_database.sh)
+  - finish docs
+  - import dev_log from all projects
+  - reference release recordable.js
+  - me6
+  - me16
 [ ] me16 end task
-  - me end [date:time] # ends last task if applicable
+  - me end date:time # ends last task if applicable
 [ ] me17 summary page
-[x] me18 production frontend
 
-# ideas v1.1 # TODO v1.0
+# ideas v1.1
 - when create & edit, color the output green / red
 - create import script of dev logs (and check current data)
 - unify errors `bin/cli.rb e -a` `bin/cli.rb e -at=a`
 - rename task#text na #message, actuall make it #goal
+- run rails via cli command
+- document well cli commands
 
 # ideas v2.0 # TODO v2.0
 - move the cli to zig

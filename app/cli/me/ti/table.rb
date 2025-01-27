@@ -1,7 +1,7 @@
 module Me::Ti::Table
   attr_reader :records
 
-  # TODO v1.0
+  # TODO
   # three visuals characteristics:
   #   - with the table caracters
   #   - hashes as borders (-m)
