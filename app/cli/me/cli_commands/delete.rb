@@ -7,7 +7,7 @@ class Me::CliCommands::Delete < Me::CommandBase
 
   def parse! args
     @id = args.shift.presence unless args.first&.start_with? "-"
-    parse_args! args
+    super
   end
 
   def load_now

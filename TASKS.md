@@ -11,6 +11,7 @@
   - cleanup TODOs
 [ ] me15 - TODO v1.0 & release
 [ ] me16 end task
+  - me end [date:time] # ends last task if applicable
 [ ] me17 summary page
 [x] me18 production frontend
 
@@ -18,7 +19,7 @@
 - when create & edit, color the output green / red
 - create import script of dev logs (and check current data)
 - unify errors `bin/cli.rb e -a` `bin/cli.rb e -at=a`
-- rename task#text na #message
+- rename task#text na #message, actuall make it #goal
 
 # ideas v2.0 # TODO v2.0
 - move the cli to zig

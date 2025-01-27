@@ -30,9 +30,15 @@ bin/production bin/rails assets:precompile
 ## USE
 ### TODO v1.0 docs
 ```bash
+# TODO rename Me::CliCommands::* => Me::Command::*, Me::CommandBase => Me::Command
 # TODO copy rails master key
 # TODO add database (either from backup or create new one)
 # TODO install bash command alias for /me/src/bin/cli.rb
+# aliases:
+# - me='/me/bin/cli'
+# - mes='/me/bin/cli start'
+# - mee='/me/bin/cli edit'
+# - mei='/me/bin/cli interactive'
 
 cd /me/src
 DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bin/production_exec bin/rails db:reset

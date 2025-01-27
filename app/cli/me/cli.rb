@@ -7,6 +7,7 @@ module Me::Cli
     when "list", "ls" then Me::CliCommands::List
     when "edit", "e" then Me::CliCommands::Edit
     when "delete" then Me::CliCommands::Delete
+    when "interactive" then Me::CliCommands::Interactive
     when "-h", "--help"
       get_log_io(:out).puts HELP_MESSAGE
       Me::Cli.exit! 0

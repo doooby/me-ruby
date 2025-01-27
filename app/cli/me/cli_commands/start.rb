@@ -22,7 +22,7 @@ class Me::CliCommands::Start < Me::CommandBase
   def parse! args
     @task = Task.new
     @attributes = { "start" => Me::Cli.get_now }
-    parse_args! args
+    super
   end
 
   def run

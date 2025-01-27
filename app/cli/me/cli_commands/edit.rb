@@ -15,7 +15,7 @@ class Me::CliCommands::Edit < Me::CommandBase
   def parse! args
     @id = args.shift.presence unless args.first&.start_with? "-"
     @attributes = {}
-    parse_args! args
+    super
   end
 
   def load_now

@@ -37,7 +37,7 @@ class Me::CliCommands::List < Me::CommandBase
   def parse! args
     @show_columns = Task::Print::TABLE_COLUMNS
     @scope = Task.all
-    parse_args! args
+    super
   end
 
   def pagination

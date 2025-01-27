@@ -3,7 +3,7 @@ class Me::CommandBase
 
   def initialize opt_parser
     @parser = opt_parser
-    setup_parser
+    try :setup_parser
   end
 
   def self.process!
@@ -15,6 +15,10 @@ class Me::CommandBase
     instance = new opt_parser
     yield instance
     instance.process!
+  end
+
+  def parse! args
+    parse_args! args
   end
 
   def process!
