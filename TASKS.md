@@ -7,13 +7,12 @@
 [x] me13 revision for v0.9, import data
 [ ] me14 finalize v0.9
   - production scripting
-  - update rails to v8
+  x update rails to v8
   - cleanup TODOs
 [ ] me15 - TODO v1.0 & release
 [ ] me16 end task
 [ ] me17 summary page
-[ ] me18 production frontend
-  - cleanup assets (assets.rb)
+[x] me18 production frontend
 
 # ideas v1.1 # TODO v1.0
 - when create & edit, color the output green / red

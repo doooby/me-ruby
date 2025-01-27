@@ -1,10 +1,24 @@
 class Task < ApplicationRecord
+  serialize :tasks, coder: JSON
+
+  def task= value
+    write_attribute :task, value
+    write_attribute :tasks, value&.try(:split, ",")
+  end
+
+  # TODO v1.0
+  def tasks= value
+    value = nil unless value.is_a? Array
+    value = value.presence&.map!{ _1.blank? ? nil : _1.to_s }
+    write_attribute :tasks, value || []
+  end
+
   def self.filter_by_attr_value attr, value
     condition = case attr
     when "id", "task"
       Task.arel_table[attr].eq value
     when "message"
-      Task.arel_table["text"].matches "%#{value}%"
+      Task.ble["text"].matches "%#{value}%"
     else
       raise Attributes::NotSpecifiedError, "cannot filter by #{attr}"
     end
@@ -16,6 +30,7 @@ class Task < ApplicationRecord
       {
         id: record.id,
         task: record.task,
+        tasks: record.tasks,
         start_at: record.start_at,
         end_at: record.end_at,
         message: record.text

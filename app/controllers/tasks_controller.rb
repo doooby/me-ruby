@@ -5,6 +5,7 @@ class TasksController < ApplicationController
 
   def summary
     @tasks = Task.all
+      .order(id: :desc)
       .limit(10)
 
     respond_to do |format|

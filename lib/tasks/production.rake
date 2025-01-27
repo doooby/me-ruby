@@ -1,4 +1,3 @@
-# TODO me18
 # TODO me14
 # a task to spin up production server and opens a browser
 # bin/production_exec bin/rails s -p
