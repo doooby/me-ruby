@@ -1,13 +1,9 @@
 # tasks
 [ ] me6 cli me ls
   - pagination
-[ ] me11 db backups scripting
-[x] me14 finalize v0.9
-  x production scripting
-  x update rails to v8
-  x cleanup TODOs
-[ ] me15 release v1.0
+[ ] me11 db backups rake task
   - rake task to create empty DB (see lib/installation/create_database.sh)
+[ ] me15 release v1.0
   - finish docs
   - import dev_log from all projects
   - reference release recordable.js
