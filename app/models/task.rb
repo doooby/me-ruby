@@ -45,7 +45,7 @@ class Task < ApplicationRecord
           case column
           when "i", "id" then record.id
           when "t", "task" then record.task.to_s
-          when "m", "message" then record.text.to_s
+          when "m", "g", "message" then record.text.to_s
           when "s", "start" then Me::Ti::Terminal.format_time record.start_at, settings
           when "e", "end" then
             end_at = record.end_at
@@ -67,6 +67,7 @@ class Task < ApplicationRecord
       "i" => "id",
       "t" => "task",
       "m" => "message",
+      "g" => "message",
       "s" => "start",
       "e" => "end"
     }

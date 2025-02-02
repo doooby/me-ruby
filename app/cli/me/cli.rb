@@ -8,6 +8,7 @@ module Me::Cli
     when "edit", "e" then Me::CliCommands::Edit
     when "delete" then Me::CliCommands::Delete
     when "interactive" then Me::CliCommands::Interactive
+    when "start_task" then Me::Commands::StartTask
     when "-h", "--help"
       get_log_io(:out).puts HELP_MESSAGE
       Me::Cli.exit! 0

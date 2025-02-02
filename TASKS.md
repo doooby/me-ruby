@@ -6,7 +6,6 @@
 [ ] me15 release v1.0
   - finish docs
   - import dev_log from all projects
-  - reference release recordable.js
   - me6
   - me16
 [ ] me16 end task

@@ -23,13 +23,14 @@ read and execute [https://raw.githubusercontent.com/doooby/me-ruby/refs/heads/ma
 ```bash
 cd /me/src
 bin/production_exec bin/rails db:create db:schema:load
+bin/production_exec bin/rails db:migrate
 bin/production_exec bin/rails production:build
 
 # setup shell aliases
-# - me='/me/bin/cli'
-# - mes='/me/bin/cli start'
-# - mee='/me/bin/cli edit'
-# - mei='/me/bin/cli interactive'
+# - me='/me/bin/mecli'
+# - mes='/me/bin/mecli_start'
+# - mee='/me/bin/mecli edit'
+# - mei='/me/bin/mecli interactive'
 # - mew='(cd /me/src && bin/production_exec bin/rails s)'
 
 # copy rails master key

@@ -18,13 +18,26 @@ git clone git@github.com:doooby/me-ruby.git $root_path/src
 set +x
 
 echo "... setting production runner"
+function GenerateBinRunner () {
+  bin_file="$root_path/bin/$1"
+
+  cat << EOF > $bin_file
+  #!/usr/bin/env sh
+set -e
+cd $root_path/src
+exec bin/production_exec bin/cli.rb $2 "\$@"
+EOF
+
+  chmod 500 $bin_file
+}
 set -x
 mkdir $root_path/bin
-cat << EOF > $root_path/bin/cli
-#!/usr/bin/env sh
-cd $root_path && exec bin/production_exec bin/cli.rb "$@"
-EOF
-chmod u+x $root_path/bin/cli
+# TODO v1.0
+# rename bin/cli to bin/mecli
+# add thewhole /me/bin to PATH
+GenerateBinRunner mecli
+GenerateBinRunner mecli_start start_task
+GenerateBinRunner mecli_list list_tasks
 set +x
 
 echo "... installing dependencies"
