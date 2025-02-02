@@ -73,6 +73,7 @@ module Me::Cli
 
 -- COMMANDS
 start, t   adds new task record
+start_task   adds new task record
 list, ls   list records
 edit, e    edit a record
 delete     delete a record
