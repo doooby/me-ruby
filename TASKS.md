@@ -3,7 +3,7 @@
   - pagination
 [ ] me11 db backups rake task
   - rake task to create empty DB (see lib/installation/create_database.sh)
-[ ] me15 release v1.0
+[ ] me15 release v3.0
   - finish docs
   - import dev_log from all projects
   - me6

@@ -18,8 +18,8 @@ export default defineConfig({
     },
   },
   define: {
-    'import.meta.env.ME_SERVER_URL': JSON.stringify(
-      process.env.ME_SERVER_URL || 'http://localhost:3030'
+    'import.meta.env.ME_SERVER_ORIGIN': JSON.stringify(
+      process.env.ME_SERVER_ORIGIN || 'http://localhost:3030'
     ),
   },
   build: {

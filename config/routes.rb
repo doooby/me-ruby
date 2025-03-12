@@ -16,6 +16,6 @@ Rails.application.routes.draw do
   get "summary" => "tasks#summary"
 
   scope "fe-api-v1", constraints: { format: :json } do
-    post "summary" => "tasks#summary"
+    get "summary" => "tasks#summary"
   end
 end
