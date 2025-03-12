@@ -1,13 +1,22 @@
 # ME
 a tool to track my hours for dev tasks
 
+## Is it any good?
+[yes](https://news.ycombinator.com/item?id=3067434)
+
+## Status
+I use it. I'll see where it goes from here. for tasks & TODOs please refer [here](TASKS.md).
+
 ## USE
 Currenty, I just git clone this to `/me/src` and use it "globaly" from there.
 
 Cli:
 ```bash
+# start new task
 mes -t123 -m"i have a goal"
+# list last task
 me ls --per 1
+# edit task [id=42], make it start today at 10:00 and end today and now
 mee 42 -as=:1000 -ae=:
 ```
 for details skip [here](#cli-commands).
@@ -17,7 +26,7 @@ There is also a web:
 (cd /me/src && bin/production_exec bin/rails s)
 ```
 
-### current production setupj
+### current production setup
 #### install:
 read and execute [https://raw.githubusercontent.com/doooby/me-ruby/refs/heads/main/lib/installation/create_me_directory.sh](this) script to setup "/me" directory structure. Find appropriate version, if you don't want main branch.
 ```bash
@@ -54,13 +63,12 @@ cp /me/var/production.sqlite3 /me/var/production.sqlite3.$bck_date.bck
 cp /tmp/me-db-path /me/var/production.sqlite3
 ```
 
-## Cli Commands {#cli-commands}
+## Cli Commands {cli-commands}
 ```bash
 # TODO
 ```
 
-
-## TODO docs
+## older docs
 ```bash
 # TODO rename Me::CliCommands::* => Me::Command::*, Me::CommandBase => Me::Command
 # TODO copy rails master key
