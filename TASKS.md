@@ -11,6 +11,7 @@
 [ ] me16 end task
   - me end date:time # ends last task if applicable
 [ ] me17 summary page
+[ ] me18 explore using TTY toolkit (command, config, etc)
 
 # ideas v1.1
 - when create & edit, color the output green / red
