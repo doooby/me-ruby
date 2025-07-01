@@ -9,6 +9,7 @@ module Me::Cli
     when "delete" then Me::CliCommands::Delete
     when "interactive" then Me::CliCommands::Interactive
     when "start_task" then Me::Commands::StartTask
+    when "end" then Me::CliCommands::End
     when "-h", "--help"
       get_log_io(:out).puts HELP_MESSAGE
       Me::Cli.exit! 0
@@ -76,6 +77,7 @@ start, t   adds new task record
 start_task   adds new task record
 list, ls   list records
 edit, e    edit a record
+end        end task
 delete     delete a record
   DOC
 end

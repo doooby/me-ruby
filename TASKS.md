@@ -8,10 +8,11 @@
   - import dev_log from all projects
   - me6
   - me16
-[ ] me16 end task
+[x] me16 end task
   - me end date:time # ends last task if applicable
 [ ] me17 summary page
 [ ] me18 explore using TTY toolkit (command, config, etc)
+[ ] me19 integrate aws ec2 control
 
 # ideas v1.1
 - when create & edit, color the output green / red
