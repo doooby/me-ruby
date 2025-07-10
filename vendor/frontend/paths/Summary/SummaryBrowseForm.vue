@@ -12,14 +12,44 @@ import {} from 'vue'
 </div>
 <ol>
   <li>
-    <fe-printout
-      caption="caption"
+    <box-with-caption
+      caption="Search"
+      icon="search"
     >
-    <input class="form-control fe--form-control"
-      :placeholder="placeholder"
-      type="text"
-    />
-    </fe-printout>
+    <div class="fe-control">
+      <div class="fe-control--content">
+        <input
+          type="text"
+          />
+      </div>
+    </div>
+    </box-with-caption>
+  </li>
+  <li>
+    <box-with-caption
+      caption="Task"
+      icon="list-task"
+    >
+      <input-search />
+    </box-with-caption>
+  </li>
+  <li>
+    <box-with-caption
+      caption="Start at"
+      icon="clock-history"
+    >
+      
+    </box-with-caption>
+  </li>
+  <li>
+    <box-with-caption
+      caption="End at"
+      icon="clock-history"
+    >
+     <input class="form-control fe--form-control"
+      type="datetime-local"
+     />
+    </box-with-caption>
   </li>
 </ol>
 </template>
