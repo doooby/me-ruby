@@ -20,7 +20,7 @@ body {
     --bs-btn-border-color: var(--me-text-primary-color);
     --bs-btn-hover-bg: none;
     --bs-btn-hover-color: var(--me-text-focus-color);
-    --bs-btn-hover-border-color: transparent;
+    --bs-btn-hover-border-color: var(--me-text-primary-color);
     --bs-btn-active-bg: none;
     --bs-btn-active-color: var(--me-text-focus-color);
     --bs-btn-active-border-color: var(--me-text-focus-color);
@@ -99,6 +99,11 @@ body {
      }
    }
  }
+}
+
+.fe-control--dialog {
+  padding: 4px;
+  background-color: white;
 }
 
 .fe--table {
