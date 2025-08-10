@@ -3,27 +3,30 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
 
 body {
-  --me-text-color: #867c5f;
-  --me-text-primary-color: var(--bs-warning-bg-subtle);
-  --me-text-focus-color: #bdbd37;
-  --me-focus-shadow--color: #163920;
-  --me-focus-shadow: 0 0 0 4px var(--me-focus-shadow--color);
-  --me-border--color: #867c5f;
-  --bs-body-color: var(--me-text-color);
-  --bs-body-bg: var(--bs-dark);
+  --me-body-bg--color: #331832;
+  --me-text--color: #fdf0d5;
+  --me-primary--color: #d81e5b;
+  --me-secondary--color: #c6d8d3;
+  --me-strike--color: #f0544f;
+  --me-primary-shadow--color: color-mix(in srgb, var(--me-primary--color), var(--me-body-bg--color) 50%);
+  --me-focus-shadow: 0 0 0 4px var(--me-primary-shadow--color);
+  --me-input-bg--color: #612e5f;
+  --me-input-border--color: var(--me-secondary--color);
+  --bs-body-color: var(--me-text--color);
+  --bs-body-bg: var(--me-body-bg--color);
 }
 
 .fe--btn {
+  --bs-btn-bg: var(--me-input-bg--color);
+  --bs-btn-hover-bg: none;
+  --bs-btn-hover-color: var(--me-strike--color);
+  --bs-btn-hover-border-color: var(--me-strike--color);
+  --bs-btn-active-bg: none;
+  --bs-btn-active-color: color-mix(in srgb, var(--me-strike--color) 70%, white 40%);
+  --bs-btn-active-border-color: var(--bs-btn-active-color);
   &.btn-secondary {
-    --bs-btn-bg: none;
-    --bs-btn-color: var(--me-text-primary-color);
-    --bs-btn-border-color: var(--me-text-primary-color);
-    --bs-btn-hover-bg: none;
-    --bs-btn-hover-color: var(--me-text-focus-color);
-    --bs-btn-hover-border-color: var(--me-text-primary-color);
-    --bs-btn-active-bg: none;
-    --bs-btn-active-color: var(--me-text-focus-color);
-    --bs-btn-active-border-color: var(--me-text-focus-color);
+    --bs-btn-color: var(--me-secondary--color);
+    --bs-btn-border-color: var(--me-input-border--color);
     &:focus,
     &:focus-visible {
       box-shadow: var(--me-focus-shadow);
@@ -33,7 +36,8 @@ body {
 
 .fe--form-control {
   &.form-control {
-    border-color: var(--me-border--color);
+    color: var(--me-input-border--color);
+    border-color: var(--me-input-border--color);
 
     &:focus,
     &:focus-visible {
